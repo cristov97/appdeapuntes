@@ -15,6 +15,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context){
     return MaterialApp(
       title: 'Appuntes',
+      theme: ThemeData(
+        primaryColor: Colors.blue[800],
+      ),
       debugShowCheckedModeBanner: false,
       initialRoute: 'login',
       routes: {
@@ -28,6 +31,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class UserDatos{
-  static Set<String> listLikes;
-}

@@ -1,7 +1,8 @@
-import 'package:appuntes/Otros/textInformationWidget.dart';
 import 'package:flutter/material.dart';
+
+import 'package:appuntes/Widgets/textInformationWidget.dart';
  
-class Tarjeta extends StatelessWidget {
+class TarjetaArchivo extends StatelessWidget {
 
   final String nombre;
   final String asignatura;
@@ -10,7 +11,7 @@ class Tarjeta extends StatelessWidget {
   final String autor;
   final bool solucion;
 
-  Tarjeta({
+  TarjetaArchivo({
     this.nombre,
     this.asignatura,
     this.year,

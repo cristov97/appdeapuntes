@@ -7,8 +7,10 @@ import 'selecionar_archivos.dart';
 import 'upload_form.dart';
 
 class UploadPage extends StatefulWidget {
+
   final FilePickerResult result;
   UploadPage({this.result});
+
   @override
   State<StatefulWidget> createState() => _UploadPageState();
 }
@@ -20,26 +22,17 @@ class _UploadPageState extends State<UploadPage> {
   final background = Padding(
     padding: EdgeInsets.symmetric(vertical: 15),
     child: Container(
-      decoration: BoxDecoration(
-        color: Colors.red[900],
-        borderRadius: BorderRadius.circular(25) 
-      ),
+      decoration: BoxDecoration(color: Colors.red[900], borderRadius: BorderRadius.circular(25)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children:[ 
+
           Text(
             'DESCARTAR',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 25,
-              fontWeight: FontWeight.bold
-            )
+            style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold)
           ),
-          Icon(
-            Icons.delete,
-            color: Colors.white,
-            size: 40
-          )
+
+          Icon(Icons.delete, color: Colors.white, size: 40)
         ]
       ) 
     )
@@ -214,9 +207,7 @@ class _UploadPageState extends State<UploadPage> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.file_upload
-        ),
+        child: Icon(Icons.file_upload),
         onPressed: (){ 
           print('subido');
         }
@@ -234,14 +225,9 @@ class ModificableAppBar{
     return AppBar(
       title: Text('Compartir Apuntes'),
       centerTitle: true,
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.blue[800],
       actions: [
-        IconButton(
-          icon: Icon(
-            Icons.add_box
-          ),
-          onPressed: action
-        )
+        IconButton(icon: Icon(Icons.add_box), onPressed: action)
       ]
     );
   }
@@ -249,35 +235,15 @@ class ModificableAppBar{
   Widget seleccion({int count, Function finish, Function delete, Function edit, Function selectAll}){
     return AppBar(
       automaticallyImplyLeading: false,
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back
-        ),
-        onPressed: finish,
-      ),
+      leading: IconButton(icon: Icon(Icons.arrow_back), onPressed: finish),
       title: Text('$count'),
       backgroundColor: Colors.blue,
       actions: [
-        IconButton(
-          icon: Icon(
-            Icons.library_add_check
-          ),
-          onPressed: selectAll
-        ),
+        IconButton(icon: Icon(Icons.library_add_check), onPressed: selectAll),
         
-        IconButton(
-          icon: Icon(
-            Icons.edit
-          ),
-          onPressed: edit
-        ),
+        IconButton(icon: Icon(Icons.edit), onPressed: edit),
 
-        IconButton(
-          icon: Icon(
-            Icons.delete
-          ),
-          onPressed: delete
-        )
+        IconButton(icon: Icon(Icons.delete), onPressed: delete)
       ]
     );
   }

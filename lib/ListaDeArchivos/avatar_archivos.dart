@@ -14,7 +14,7 @@ class AvatarArchivo extends StatelessWidget{
   );
 
   final OpIdentificador iden = OpIdentificador();
-  final AvatarColor color = AvatarColor();
+  final ColorArchivo color = ColorArchivo();
 
   @override
   Widget build(BuildContext context) {
@@ -22,56 +22,44 @@ class AvatarArchivo extends StatelessWidget{
       backgroundColor: colorAvatar,
       child: Text(
         textAvatar,
-        style: TextStyle(
-          fontSize: iden.fontSize,
-          color: Colors.white
-        )
+        style: TextStyle(fontSize: iden.fontSize, color: Colors.white)
       )
     ); 
   }
 
   Color get colorAvatar{
-    if(OpIdentificador.option == null){
-      return color.aleatorio;
-    }
-    else{
-      if(OpIdentificador.option == Identificador.inicial){
+    switch (OpIdentificador.option) {
+      case Identificador.inicial:  
         return color.aleatorio;
-      }
-      else if(OpIdentificador.option == Identificador.archExtension){
+        break;
+
+      case Identificador.archExtension:
         return color.porExtension[extension];
-      }
-      else{
-        throw null;
-      }
-    }
+        break;
+
+      default:
+        return color.aleatorio;
+        break;
+    } 
   }
 
   String get textAvatar{
-    if(OpIdentificador.option == Identificador.inicial){
-      return nombre.substring(0,1).toUpperCase();
-    }
-    else if(OpIdentificador.option == Identificador.archExtension){
-      if(extension.contains('pdf')){
-        return extension;
-      }
-      else if(extension.contains('docx')){
-        return 'word';
-      }
-      else if(extension.contains('ppt')){
-        return extension;
-      }
-      else{
+    switch (OpIdentificador.option) {
+      case Identificador.inicial:
         return nombre.substring(0,1).toUpperCase();
-      }
-    }
-    else{
-      return nombre.substring(0,1).toUpperCase();
+        break;
+      case Identificador.archExtension:
+        if(extension.contains('docx')) return 'word';
+        else return extension;
+        break;  
+      default:
+        return nombre.substring(0,1).toUpperCase();
+        break;
     }
   }
 }
 
-class AvatarColor{
+class ColorArchivo{
 
   Color get aleatorio{
     int i = Random.secure().nextInt(7);

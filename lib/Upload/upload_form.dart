@@ -8,7 +8,12 @@ class UploadForm extends StatefulWidget{
   final ModelUpload datos;
   final bool editarVarios;
 
-  UploadForm({this.context, this.datos, this.editarVarios = false});
+  UploadForm({
+    this.context,
+    this.datos, 
+    this.editarVarios = false
+  });
+
   @override
   _UploadFormState createState() => _UploadFormState();
 }
@@ -75,14 +80,14 @@ class _UploadFormState extends State<UploadForm> {
     final pegarNombre = TextButton(
       child: Row(
         children:[
-          Icon(
-            Icons.paste,
-            size: 15
-          ),
+          Icon(Icons.paste, size: 15),
+
           SizedBox(width: 5),
+          
           Text('Pegar nombre por defecto')
         ]
       ),
+
       onPressed: (){ 
         nombre.text = widget.datos.archivo.name.replaceAll(
           '.${widget.datos.archivo.extension}', ''
@@ -187,7 +192,7 @@ class _UploadFormState extends State<UploadForm> {
                 ),
                 onSaved: (value) => widget.datos.detalle = value,
                 onEditingComplete: () => detallesFocus.unfocus(),
-              ),
+              )
             ]
           )
         ),
@@ -208,7 +213,7 @@ class _UploadFormState extends State<UploadForm> {
           textColor: Colors.white,
           onPressed: guardar,
           child: Text('Guardar')
-        ),
+        )
       ]
     );
   }

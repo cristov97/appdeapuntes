@@ -69,12 +69,12 @@ class UiArchivo extends StatelessWidget{
             Expanded(
               flex: 1,
               child: IconButton(
-                icon: Icon(Icons.info, color: Colors.blue[900]),
-                splashColor: Colors.blue[900],
+                icon: Icon(Icons.info, color: Colors.blue[800]),
+                splashColor: Colors.blue[800],
                 onPressed: (){
                   showDialog(
                     context: context,
-                    builder: (context) => Tarjeta(
+                    builder: (context) => TarjetaArchivo(
                       nombre     : nombre,
                       asignatura : asignatura,
                       detalle    : detalle,
@@ -90,7 +90,7 @@ class UiArchivo extends StatelessWidget{
             Expanded(
               flex: 2,
               child: PopupMenuButton(
-                icon: Icon(Icons.more_vert, color: Colors.blue[900]),
+                icon: Icon(Icons.more_vert, color: Colors.blue[800]),
                 elevation: 15,
                 offset: Offset(10,10),
                 itemBuilder: (context) => _items,
@@ -102,7 +102,7 @@ class UiArchivo extends StatelessWidget{
           ]
         ),
 
-        Divider(color: Colors.blue)
+        Divider(color: Colors.black38)
       ]
     );
   }

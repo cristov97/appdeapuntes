@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:appuntes/ListaDeArchivos/lista_archivos.dart';
-import 'package:appuntes/Otros/textInformationWidget.dart';
 import 'comunidad_page.dart';
+import 'tarjeta_comunidad.dart';
 
 class MisDatos{
   String nick;
@@ -55,7 +55,7 @@ class Comunidades extends StatelessWidget{
         nombre: 'UV',
         descripcion: 'mns dmnfmns dmnfn knsfkn kaskdkn ',
         publico: false,
-        color: Colors.blue,
+        color: Colors.green,
         usuarios:[
           Usuario('a'),
           Usuario('b'),
@@ -75,6 +75,41 @@ class Comunidades extends StatelessWidget{
                 extension: 'ppt'
               ), 
               DatosArchivos(
+                nombre: 'INGENIERIA DE LOS MATERIALES TAREA 3',
+                year: '2006',
+                asignatura: 'INGENIERIA DE LOS MATERIALES',
+                like: 50,
+                extension: 'ppt'
+              ), 
+              DatosArchivos(
+                nombre: 'INGENIERIA DE LOS MATERIALES TAREA 3',
+                year: '2006',
+                asignatura: 'INGENIERIA DE LOS MATERIALES',
+                like: 50,
+                extension: 'ppt'
+              ), 
+              DatosArchivos(
+                nombre: 'INGENIERIA DE LOS MATERIALES TAREA 3',
+                year: '2006',
+                asignatura: 'INGENIERIA DE LOS MATERIALES',
+                like: 50,
+                extension: 'ppt'
+              ), 
+              DatosArchivos(
+                nombre: 'INGENIERIA DE LOS MATERIALES TAREA 3',
+                year: '2006',
+                asignatura: 'INGENIERIA DE LOS MATERIALES',
+                like: 50,
+                extension: 'ppt'
+              ), 
+              DatosArchivos(
+                nombre: 'INGENIERIA DE LOS MATERIALES TAREA 3',
+                year: '2006',
+                asignatura: 'INGENIERIA DE LOS MATERIALES',
+                like: 50,
+                extension: 'ppt'
+              ), 
+              DatosArchivos(
                 nombre: 'Prueba 2 de ecuaciones diferenciales 2021',
                 year: '2021',
                 asignatura: 'ECUACIONES DIFERENCIALES',
@@ -84,14 +119,28 @@ class Comunidades extends StatelessWidget{
                 extension: 'pdf'
               ), 
             ]
-          )
+          ),
+          Seccion(titulo: 'g', archivos: []),
+           Seccion(titulo: 'g', archivos: []),
+            Seccion(titulo: 'g', archivos: []),
+             Seccion(titulo: 'g', archivos: []),
+              Seccion(titulo: 'g', archivos: []),
+               Seccion(titulo: 'g', archivos: []),
+                Seccion(titulo: 'g', archivos: []),
+                 Seccion(titulo: 'g', archivos: []),
+                  Seccion(titulo: 'g', archivos: []),
+                   Seccion(titulo: 'g', archivos: []),
+                    Seccion(titulo: 'g', archivos: []),
+                     Seccion(titulo: 'g', archivos: []),
+                      Seccion(titulo: 'g', archivos: []),
+                       Seccion(titulo: 'g', archivos: []),
         ]
       ),
       Comunidad(
         nombre: 'El rincon de las matematicas y la tecnologia',
         descripcion: 'mnsdmnfmnsdmnfn knsfkn kaskdkn 123124124129740182094818248102 93893893 93893 93029 4749',
         publico: true,
-        color: Colors.red,
+        color: Colors.purple,
         usuarios:[
           Usuario('a'),
           Usuario('b'),
@@ -223,6 +272,7 @@ class UiComunidad extends StatelessWidget{
             padding: EdgeInsets.only(top: 5),
             child: Row(
               children: [
+
                 Text(
                   publico == false? 'Privada' : 'Pública',
                   style: TextStyle(color: Colors.black)
@@ -234,10 +284,12 @@ class UiComunidad extends StatelessWidget{
                   publico == false? Icons.lock : Icons.lock_open,
                   color: Colors.black,
                   size: 14
-                ),   
+                )
+
               ]
             )
           ),
+
           onTap: () => Navigator.push(
             context, 
             MaterialPageRoute(
@@ -249,7 +301,7 @@ class UiComunidad extends StatelessWidget{
                 secciones   : secciones,
               )
             )
-          ),
+          )
         ),
 
         Container(
@@ -277,74 +329,17 @@ class UiComunidad extends StatelessWidget{
                   onTap: (){
                     showDialog(
                       context: context,
-                      builder: (context) => SimpleDialog(
-                        backgroundColor: color,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)
-                        ),
-                        titlePadding: EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 15
-                        ),
-                        title: Row(
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: avatar(color, Colors.white, 60),
-                            ),
-
-                            SizedBox(width: 8),
-
-                            Expanded(
-                              flex: 5,
-                              child: Text(
-                                titulo,
-                                style: TextStyle(
-                                  color: Colors.white, 
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18
-                                )
-                              )
-                            )
-                          ],
-                        ),
-
-                        contentPadding: EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 15
-                        ),
-
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15)
-                            ),
-                            child: TextInformation('Descripción : ', descripcion)
-                          ),
-
-                          SizedBox(height: 15),
-
-                          FlatButton(
-                            color: Colors.white70,
-                            textColor: Colors.black87,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(publico == true? 'Unirme' : 'Enviar solicitud'),
-                                SizedBox(width: 5),
-                                Icon(publico == true? Icons.person : Icons.send)
-                              ],
-                            ),
-                            onPressed: () {
-                              
-                            },
-                          )
-                        ]
+                      builder: (context) => TarjetaComunidad(
+                        color       : color,
+                        titulo      : titulo,
+                        descripcion : descripcion,
+                        publico     : publico
                       )
                     );
                   }
                 )
               )
+              
             ]
           )
         ),

@@ -61,6 +61,7 @@ class SeleccionArchivos{
       );
     }
     else{
+      
       _data = List.generate(lista.length, (i) => ModelUpload.porDefecto(lista.toList()[i]));
     }
 

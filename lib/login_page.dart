@@ -53,33 +53,34 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
 
-    final pantalla = MediaQuery.of(context).size;
+    final screen = MediaQuery.of(context).size;
 
     return Scaffold(
       body: Stack(
         children: [
+          
           Container(
             width: double.infinity,
-            height: pantalla.height * 0.5,
+            height: screen.height * 0.5,
             decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.blue, Colors.blue[700], Colors.blue[900]]
-              ),
+              gradient: LinearGradient(colors: [Colors.blue, Colors.blue[700], Colors.blue[900]]),
               borderRadius: BorderRadius.vertical(bottom: Radius.circular(25))
             )
           ),
 
           Center(
             child: Container(
-              width: pantalla.width * 0.9,
-              height: opcion == LoginMenu.menu 
-              ? pantalla.height * 0.25
-              : pantalla.height * 0.4,
+              width: screen.width * 0.9,
+              height: (
+                opcion == LoginMenu.menu 
+                ? screen.height * 0.25
+                : screen.height * 0.4
+              ),
               padding: EdgeInsets.fromLTRB(
-                pantalla.width * 0.035,
-                pantalla.height * 0.03,
-                pantalla.width * 0.04,
-                pantalla.height * 0.02,
+                screen.width * 0.035,
+                screen.height * 0.03,
+                screen.width * 0.04,
+                screen.height * 0.02,
               ),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -94,32 +95,25 @@ class _LoginState extends State<Login> {
           ),
 
           Positioned(
-            top: pantalla.height * 0.05,
-            right: pantalla.width * 0.025,
+            top: screen.height * 0.05,
+            right: screen.width * 0.025,
             child: TextButton(
               style: ButtonStyle(
                 overlayColor: MaterialStateProperty.all(Colors.black26)
               ),
               child: Row(
                 children: [
-                  Text(
-                    'Omitir',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20
-                    )
-                  ),
+                  Text('Omitir', style: TextStyle(color: Colors.white, fontSize: 20)),
+
                   SizedBox(width: 5),
-                  Icon(
-                    Icons.arrow_forward,
-                    color: Colors.white,
-                    size: 30
-                  )
+
+                  Icon(Icons.arrow_forward, color: Colors.white, size: 30)
                 ]
               ),
               onPressed: () => Navigator.pushReplacementNamed(context, 'home')
             )
           )
+          
         ]
       )
     );
@@ -133,6 +127,7 @@ class _LoginState extends State<Login> {
 
     return Column(
       children: [
+
         Text(
           '¡Bienvenido/a!',
           style: TextStyle(fontSize: 25)
@@ -159,6 +154,7 @@ class _LoginState extends State<Login> {
           child: Text('Iniciar sesión', style: buttonStyle),
           onPressed: () => setState(() => opcion = LoginMenu.sesion)
         )
+
       ]
     );
   }
@@ -168,6 +164,7 @@ class _LoginState extends State<Login> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
+
           Row(
             children: [
               IconButton(
@@ -184,8 +181,9 @@ class _LoginState extends State<Login> {
                 opcion == LoginMenu.registro? 'Registro' : 'Inicia sesión',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.black, fontSize: 20)
-              ),
-            ],
+              )
+
+            ]
           ),
 
           Spacer(),
@@ -243,11 +241,11 @@ class _LoginState extends State<Login> {
               registrado = !registrado;
             }
           )
+          
         ]
       )
     );
   }
-
 }
 
   

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import 'package:appuntes/Otros/textInformationWidget.dart';
+import 'package:appuntes/Widgets/textInformationWidget.dart';
 import 'package:appuntes/Upload/selecionar_archivos.dart';
 import 'upload_form.dart';
 
@@ -63,34 +63,38 @@ class UiUploadArchivos extends StatelessWidget{
                         backgroundColor: Colors.white,
                         child: Text('$i', style: TextStyle(fontSize: 20))
                       ),
+
                       title: Text(
                         datos.archivo.name,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white
-                        )
+                        style: TextStyle(fontSize: 16, color: Colors.white)
                       ),
+
                       subtitle: seleccion == true? null : Row(
                         children: [
+
                           Text(
                             datos.isExpanded == false? 'Mostrar datos' : 'Ocultar datos',
                             style: TextStyle(
                             color: Colors.white  
                             )
                           ),
+
                           Icon(
                             datos.isExpanded == false? Icons.arrow_drop_down : Icons.arrow_drop_up,
                             color: Colors.white
                           )
+
                         ]
                       ),
+
                       trailing: seleccion == true? null : IconButton(
                         icon: Icon(Icons.folder),
                         color: Colors.amber,
                         onPressed: onPressedTrailing
                       ),
+
                       initiallyExpanded: datos.isExpanded,
                       onExpansionChanged: onExpansionChanged,
                       tilePadding: EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -116,7 +120,9 @@ class UiUploadArchivos extends StatelessWidget{
                                         fontWeight: FontWeight.bold,
                                       )
                                     ),
+
                                     SizedBox(width: 5.0),
+                                    
                                     Icon(
                                       Icons.edit,
                                       color: Colors.blue,
@@ -124,6 +130,7 @@ class UiUploadArchivos extends StatelessWidget{
                                     )
                                   ]
                                 ),
+
                                 onPressed: (){             
                                   showDialog<bool>(
                                     barrierDismissible: false,
@@ -135,6 +142,7 @@ class UiUploadArchivos extends StatelessWidget{
                                   ).then((value) => actualizarDatos(value)); 
                                 },
                               ),
+
                               TextInformation('Nombre: ', datos.nombre),
                               TextInformation('Asignatura: ', datos.asignatura),
                               TextInformation('Año: ', datos.year),
@@ -152,6 +160,7 @@ class UiUploadArchivos extends StatelessWidget{
             ),
           ],
         ),
+
         Divider()
       ]
     );
@@ -169,12 +178,7 @@ class UiUploadArchivos extends StatelessWidget{
               topRight: Radius.circular(15),
               bottomRight: Radius.circular(15)
             ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.blueGrey[200],
-                offset: Offset(3, 3)
-              )
-            ]
+            boxShadow: [BoxShadow(color: Colors.blueGrey[200], offset: Offset(3, 3))]
           ),
           child: ListTile(
             leading: CircleAvatar(
@@ -196,8 +200,8 @@ class UiUploadArchivos extends StatelessWidget{
         Divider()
       ],
     );
-    
-    return datos.isSelec == true? itemSeleccionado : seleccion == true? item : Dismissible(
+
+    final itemDismissible = Dismissible(
       key: Key(datos.archivo.name),
       direction: DismissDirection.endToStart,
       resizeDuration: Duration(milliseconds: 800),
@@ -213,20 +217,15 @@ class UiUploadArchivos extends StatelessWidget{
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children:[ 
+            children:[
+
               Text(
                 'DESCARTAR',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold
-                )
+                style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)
               ),
-              Icon(
-                Icons.delete,
-                color: Colors.white,
-                size: 40
-              )
+
+              Icon(Icons.delete, color: Colors.white, size: 40)
+              
             ]
           ) 
         )
@@ -234,5 +233,7 @@ class UiUploadArchivos extends StatelessWidget{
       onDismissed: (direction) => onDismissed(direction, index),
       child: item
     );
+    
+    return datos.isSelec == true? itemSeleccionado : seleccion == true? item : itemDismissible;
   }
 }

@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:appuntes/Widgets/optionListTileWidget.dart';
 import 'op_identificador.dart';
-import 'optionListTileWidget.dart';
 
 class Ajustes extends StatefulWidget{
   @override
@@ -15,15 +15,6 @@ class _AjustesState extends State<Ajustes>{
 
   OpIdentificador iden = OpIdentificador();
   
-  final Text textListaArchivos = Text(
-    'Lista de archivos',
-    style: TextStyle(
-    color: Colors.blue,
-    fontSize: 16,
-    fontWeight: FontWeight.bold
-    ),
-  );
-
   @override
   Widget build(BuildContext context) {    
     return Scaffold(
@@ -36,8 +27,12 @@ class _AjustesState extends State<Ajustes>{
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 17),
-            child: textListaArchivos
+            child: Text(
+              'Lista de archivos',
+              style: TextStyle(color: Colors.blue, fontSize: 16, fontWeight: FontWeight.bold)
+            )
           ),
+
           OptionListTile(
             title: 'Indicador de archivo',
             subtitle: iden.subtitle,

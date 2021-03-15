@@ -33,8 +33,8 @@ class _MyHomePageState extends State<MyHomePage>{
 
   final botones = [
     Archivos(),
-    Recientes(),
     Comunidades(),
+    Recientes()
   ];
 
   final TextStyle titleStyle = TextStyle(
@@ -58,7 +58,7 @@ class _MyHomePageState extends State<MyHomePage>{
           style:  titleStyle   
         ),
         centerTitle: true,
-        backgroundColor: Colors.blue,
+        backgroundColor: Theme.of(context).primaryColor,
         actions: [
           IconButton(icon: Icon(Icons.search, color: Colors.white), 
             onPressed: () {
@@ -73,34 +73,34 @@ class _MyHomePageState extends State<MyHomePage>{
           children: [
             UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
-                child: Icon(Icons.verified_user),
+                child: Icon(Icons.account_circle)
               ),
               accountName: Text('nick'),
               accountEmail: Text('correo@correo.com'),
             ),
 
             ListTile(
-              leading: Icon(Icons.face, color: Colors.blue),
+              leading: Icon(Icons.face, color: Theme.of(context).primaryColor),
               title  :  Text('Perfil'),
               onTap  : () => Navigator.pushNamed(context, 'perfil')
             ),
 
             ListTile(
-              leading: Icon(Icons.library_books, color: Colors.blue),
+              leading: Icon(Icons.library_books, color: Theme.of(context).primaryColor),
               title  :  Text('Mis apuntes'),
               onTap  : (){
               }
             ),
 
             ListTile(
-              leading: Icon(Icons.chat, color: Colors.blue),
+              leading: Icon(Icons.group, color: Theme.of(context).primaryColor),
               title  :  Text('Mis comunidades'),
               onTap  : (){
               }
             ),
 
             ListTile(
-              leading: Icon(Icons.settings, color: Colors.blue),
+              leading: Icon(Icons.settings, color: Theme.of(context).primaryColor),
               title  : Text('Ajustes'),
               onTap  : () => Navigator.pushNamed(context, 'ajustes')                
             )
@@ -109,7 +109,6 @@ class _MyHomePageState extends State<MyHomePage>{
 
       ),
  
-    
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () => FocusScope.of(context).requestFocus(_mainPag),
@@ -119,30 +118,23 @@ class _MyHomePageState extends State<MyHomePage>{
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
           currentIndex: _itemActual,
+          backgroundColor: Colors.white,
+          selectedItemColor: Theme.of(context).primaryColor,
           unselectedItemColor: Colors.grey,
           items:[
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.library_books,
-                color: _itemActual == 0? Colors.blue: null
-              ), 
-              label: 'Apuntes'
+              icon: Icon(Icons.library_books), 
+              label: 'Apuntes',
             ),
 
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.person,
-                color: _itemActual == 2? Colors.blue: null
-              ), 
-              label: 'Comunidades'
+              icon: Icon(Icons.group), 
+              label: 'Comunidades',
             ),
 
             BottomNavigationBarItem(
-              icon: Icon(
-                Icons.check_box,
-                color: _itemActual == 1? Colors.blue: null
-              ),
-              label: 'Recientes'
+              icon: Icon(Icons.check_box),
+              label: 'Recientes',
             )
 
           ],

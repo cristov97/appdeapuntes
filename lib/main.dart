@@ -8,6 +8,8 @@ import 'login_page.dart';
 
 void main() {
   runApp(MyApp());
+  //altura: 803
+  //ancho:  392
 }
 
 class MyApp extends StatelessWidget {
@@ -21,11 +23,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: 'login',
       routes: {
-        'login'  : (context) => Login(),
-        'home'   : (context) => MyHomePage(),
-        'perfil' : (context) => Perfil(),
-        'ajustes': (context) => Ajustes(),
-        'upload' : (context) => UploadPage()
+        'login'   : (context) => Login(),
+        'home'    : (context) => MyHomePage(),
+        'perfil'  : (context) => Perfil(),
+        'ajustes' : (context) => Ajustes(),
+        'upload'  : (context) => UploadPage()
       },
     );
   }

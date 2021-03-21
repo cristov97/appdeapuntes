@@ -1,3 +1,6 @@
+import 'package:appuntes/HomePage/Comunidades/lista_comunidades.dart';
+
+import 'Modelo_archivos.dart';
 import 'asignaturas.dart';
 
 class Validar{
@@ -24,12 +27,10 @@ class Validar{
   }
 
   static String asigUpload(String valor){
-    if (valor.isEmpty){
-      return 'Llenar.';
-    }
-    if (!Asignaturas().listaAsig.contains(valor)){
-      return 'No válido';
-    }
+    if (valor.isEmpty) return 'Llenar.';
+    
+    if (!Asignaturas().listaAsig.contains(valor)) return 'No válido';
+    
     return null;
   }
 
@@ -40,6 +41,15 @@ class Validar{
     else{
       return null;
     }
+  }
+
+  String tituloSeccion(String titulo, List<Seccion> secciones){
+
+    Iterable<Seccion> repetidos = secciones.where((item) => item.titulo == titulo);
+
+    if (titulo.isEmpty) return 'Crear un título para tu sección';
+    if (repetidos.length != 0) return 'Ya existe una sección con este nombre';
+    return null;
   }
 
   String limpiarTexto(String texto) {
@@ -59,6 +69,15 @@ class Validar{
     }
 
     return null;
+  }
+
+  bool completarDatos(List<ModeloArchivo> datos){
+    Iterable<ModeloArchivo> incompletos = datos.where(
+      (item) => item.nombre == null || item.asignatura == null
+    );
+
+    if (incompletos.length != 0) return true;
+    else return false;
   }
 }
 

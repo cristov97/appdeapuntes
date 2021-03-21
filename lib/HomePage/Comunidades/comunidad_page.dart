@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 
-import 'package:appuntes/ListaDeArchivos/lista_archivos.dart';
+import 'package:appuntes/Otros/validaciones.dart';
+import 'package:appuntes/Otros/Modelo_archivos.dart';
+import 'package:appuntes/Upload/upload_page.dart';
 import 'package:appuntes/ListaDeArchivos/ui_archivos.dart';
 import 'lista_comunidades.dart';
+import 'personalizar_comunidad.dart';
 
 class ComunidadPage extends StatelessWidget{
 
-  final String titulo;
+  final String tituloComunidad;
   final String descripcion;
   final Color color;
   final int cantidad;
   final bool publico;
-  final Image imagen;
+  final String imagen;
   final List<Seccion> secciones; 
 
   ComunidadPage({
-    this.titulo,
+    this.tituloComunidad,
     this.descripcion,
     this.color,
     this.cantidad,
@@ -56,7 +59,7 @@ class ComunidadPage extends StatelessWidget{
                   children: [
 
                     Text(
-                      titulo,
+                      tituloComunidad,
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.white, fontSize: 23)
                     ),
@@ -74,17 +77,27 @@ class ComunidadPage extends StatelessWidget{
 
                         IconButton(
                           icon: Icon(Icons.add, color: Colors.white), 
-                          onPressed: () => showDialog(
+                          onPressed: () => showDialog<Seccion>(
                             context: context,
-                            builder: (context) => CrearSeccion()
+                            builder: (context) => CrearSeccion(
+                              tituloComunidad,
+                              secciones
+                            )
                           )
+                          .then((seccion) => secciones.add(seccion))
                         ),
 
                         IconButton(
                           icon: Icon(Icons.more_vert, color: Colors.white), 
                           onPressed: () => showModalBottomSheet(
                             context: context,
-                            builder: (context) => OpcionesComunidad()
+                            builder: (context) => OpcionesComunidad(
+                              tituloComunidad : tituloComunidad,
+                              descripcion     : descripcion,
+                              color           : color,
+                              imagen          : imagen,
+                              publico         : publico
+                            )
                           )
                         )
 
@@ -109,9 +122,10 @@ class ComunidadPage extends StatelessWidget{
                       context, 
                       MaterialPageRoute(
                         builder: (context) => UiSeccion(
-                          titulo   : secciones[i].titulo,
-                          color    : color,
-                          archivos : secciones[i].archivos,
+                          tituloComunidad : tituloComunidad,
+                          tituloSeccion   : secciones[i].titulo,
+                          color           : color,
+                          archivos        : secciones[i].archivos,
                         )
                       )
                     )
@@ -160,6 +174,21 @@ class PersistentHeader extends SliverPersistentHeaderDelegate{
 }
 
 class OpcionesComunidad extends StatelessWidget{
+
+  final String tituloComunidad;
+  final String descripcion;
+  final Color color;
+  final bool publico;
+  final String imagen;
+
+  OpcionesComunidad({
+    this.tituloComunidad,
+    this.descripcion,
+    this.color,
+    this.imagen,
+    this.publico
+  });
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -169,8 +198,20 @@ class OpcionesComunidad extends StatelessWidget{
         children: [
 
           ListTile(
-            leading: Icon(Icons.settings, color: Colors.black45),
-            title: Text('Personalizar grupo'),//desc, foto, color, nombre, privacidad
+            leading: Icon(Icons.color_lens, color: Colors.black45),
+            title: Text('Personalizar grupo'),
+            onTap: () => Navigator.push(
+              context, 
+              MaterialPageRoute(
+                builder: (context) => PersonalizarComunidad(
+                  tituloComunidad : tituloComunidad,
+                  descripcion     : descripcion,
+                  color           : color,
+                  imagen          : imagen,
+                  publico         : publico
+                )
+              )
+            )
           ),
 
           ListTile(
@@ -189,38 +230,69 @@ class OpcionesComunidad extends StatelessWidget{
   }
 }
 
-class CrearSeccion extends StatelessWidget{
+class CrearSeccion extends StatefulWidget{
 
-  final TextEditingController tituloSeccion = TextEditingController();
-  final FocusNode tituloSeccionFocus = FocusNode();
+  final String tituloComunidad;
+  final List<Seccion> secciones;
 
-  dispose(){
+  CrearSeccion(
+    this.tituloComunidad,
+    this.secciones
+  );
+
+  @override
+  _CrearSeccionState createState() => _CrearSeccionState();
+}
+
+class _CrearSeccionState extends State<CrearSeccion> {
+  TextEditingController tituloSeccion = TextEditingController();
+  FocusNode             tituloSeccionFocus;
+  Seccion               nuevaSeccion;
+  GlobalKey<FormState>  formKey;
+
+  @override
+  void initState() { 
+    super.initState();
+    tituloSeccionFocus = FocusNode();
+    nuevaSeccion       = Seccion(archivos: []);
+    formKey            = GlobalKey<FormState>();
+  }
+
+  @override
+  void dispose() { 
     tituloSeccion.dispose();
     tituloSeccionFocus.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return SimpleDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      contentPadding: EdgeInsets.only(right: 15, left: 10, bottom: 10),
-      title: Text('Crea una sección', textAlign: TextAlign.center),
-      children: [
-
-        TextField(
-          controller: tituloSeccion,
-          focusNode: tituloSeccionFocus,
-          textCapitalization: TextCapitalization.sentences,
-          textInputAction: TextInputAction.done,
-          decoration: InputDecoration(
-            icon: Icon(Icons.text_fields, color: Colors.black54),
-            labelText: 'Título de la sección',
-            helperText: 'Procura que el título sea claro y específico.',
-            helperMaxLines: 2
-          ),
-          onEditingComplete: () => tituloSeccionFocus.unfocus(),
+      shape          : RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      contentPadding : EdgeInsets.only(right: 15, left: 10, bottom: 10),
+      title          : Text('Crea una sección', textAlign: TextAlign.center),
+      children       : [
+        Form(
+          key: formKey,
+          child: TextFormField(
+            controller: tituloSeccion,
+            focusNode: tituloSeccionFocus,
+            textCapitalization: TextCapitalization.sentences,
+            textInputAction: TextInputAction.done,
+            decoration: InputDecoration(
+              icon: Icon(Icons.text_fields, color: Colors.black54),
+              labelText: 'Título de la sección',
+              helperText: 'Procura que el título sea claro y específico.',
+              helperMaxLines: 2,
+              errorMaxLines: 2
+            ),
+            validator: (value) => validar.tituloSeccion(value, widget.secciones),
+            onChanged: (value) => nuevaSeccion.titulo = value,
+            onEditingComplete: () => tituloSeccionFocus.unfocus(),
+            onSaved: (value) => nuevaSeccion.titulo = value,
+          )
         ),
-
+      
         SizedBox(height: 10),
 
         TextButton(
@@ -237,7 +309,49 @@ class CrearSeccion extends StatelessWidget{
               Text('Agregar archivos a la sección')
             ]
           ),
-          onPressed: () {},
+
+          onPressed: () {
+            Navigator.push<List<ModeloArchivo>>(
+              context, 
+              MaterialPageRoute(builder: (context) => UploadPage(
+                archivos : nuevaSeccion.archivos,
+                ruta     : '${widget.tituloComunidad}'
+                )
+              )
+            )
+            .then(
+              (archivos) => setState(() { 
+                if (archivos != null) nuevaSeccion.archivos = archivos;
+              })
+            );
+          }
+        ),
+
+        nuevaSeccion.archivos.isEmpty? SizedBox() : Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List<Widget>.generate(
+              nuevaSeccion.archivos.length, 
+              (i) => Text(
+                '${i+1}. ${nuevaSeccion.archivos[i].nombre}',
+                overflow  : TextOverflow.ellipsis,
+                textAlign : TextAlign.start,
+              )
+            )
+          ),
+        ),
+
+        TextButton(
+          child: Text('Añadir sección'),
+          onPressed: () {
+            if(formKey.currentState.validate()) {
+              formKey.currentState.save();
+              Navigator.pop(context, nuevaSeccion);
+            }
+          }
         )
 
       ]
@@ -246,13 +360,14 @@ class CrearSeccion extends StatelessWidget{
 }
 
 class UiSeccion extends StatelessWidget {
-
-  final String titulo;
-  final List<DatosArchivos> archivos;
+  final String tituloComunidad;
+  final String tituloSeccion;
+  final List<ModeloArchivo> archivos;
   final Color color;
 
   UiSeccion({
-    this.titulo,
+    this.tituloComunidad,
+    this.tituloSeccion,
     this.archivos,
     this.color
   });
@@ -261,8 +376,23 @@ class UiSeccion extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: color,
-        title: Text(titulo, overflow: TextOverflow.ellipsis),
+        backgroundColor : color,
+        title           : Text(tituloSeccion, overflow: TextOverflow.ellipsis),
+        actions         : [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UploadPage(
+                    ruta: '$tituloComunidad/$tituloSeccion'
+                  )
+                )
+              );
+            }
+          )
+        ]
       ),
 
       body: ListView.builder(
@@ -274,7 +404,7 @@ class UiSeccion extends StatelessWidget {
           asignatura   : archivos[i].asignatura,
           autor        : archivos[i].autor,
           solucion     : archivos[i].solucion,
-          likes        : archivos[i].like,
+          likes        : archivos[i].likes,
           extension    : archivos[i].extension
         )
       )   

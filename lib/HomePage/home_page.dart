@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:appuntes/Upload/upload_page.dart';
 import 'package:appuntes/ListaDeArchivos/lista_archivos.dart';
-import 'package:appuntes/Upload/selecionar_archivos.dart';
-
 import 'Comunidades/lista_comunidades.dart';
 import 'search.dart';
 import 'recientes.dart';
@@ -175,14 +172,7 @@ class DialogPlusButton{
                 fontSize: 16
               )
             ),
-            onTap: () => filePicker.multiSeleccion.then((archivo){
-              if(archivo.files.isNotEmpty){             
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => UploadPage(result: archivo))
-                );
-              }
-            })
+            onTap: () => Navigator.pushNamed(context, 'upload')
           )
         ]
       ),

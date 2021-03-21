@@ -1,6 +1,6 @@
+import 'package:appuntes/Otros/Modelo_archivos.dart';
 import 'package:flutter/material.dart';
 
-import 'package:appuntes/ListaDeArchivos/lista_archivos.dart';
 import 'comunidad_page.dart';
 import 'tarjeta_comunidad.dart';
 
@@ -19,7 +19,7 @@ class Usuario{
 
 class Seccion{
   String titulo;
-  List<DatosArchivos> archivos;
+  List<ModeloArchivo> archivos;
   Seccion({
     this.titulo,
     this.archivos
@@ -67,57 +67,65 @@ class Comunidades extends StatelessWidget{
           Seccion(
             titulo: 'ciencia',
             archivos: [
-              DatosArchivos(
+              ModeloArchivo.mostrar(
+                nombre: 'Guía 2: solucion de ecuaciones de diferenciales homogéneas de orden mayor por el método de variación de parámetros. 2018',
+                year: '2018',
+                asignatura: 'ECUACIONES DIFERENCIALES',
+                detalle: 'solucion de ecuaciones de diferenciales homogéneas de orden mayor por el método de variación de parámetros. ',
+                solucion: true,
+                autor: 'UV',
+                likes: 555,
+                extension: 'pdf'
+              ),
+              ModeloArchivo.mostrar(
+                nombre: 'Prueba 3, 2020',
+                year: '2020',
+                asignatura: 'TALLER DE INTEGRACIÓN A LA INGENIERÍA INDUSTRIAL III',
+                detalle: null,
+                solucion: true,
+                autor: 'UV',
+                likes: 555,
+                extension: 'pdf'
+              ),
+              ModeloArchivo.mostrar(
+                nombre: 'taller 1, informatica I',
+                asignatura: 'INFORMÁTICA I',
+                solucion: false,
+                autor: 'UV',
+                likes: 0,
+                extension: 'docx'
+              ), 
+              ModeloArchivo.mostrar(
+                nombre: 'Prueba 2 ALGREBA 2021 SEDE SANTIAGO',
+                asignatura: 'ÁLGEBRA',
+                likes: 555,
+                extension: 'docx'
+              ),
+              ModeloArchivo.mostrar(
+                nombre: '545454544545',
+                asignatura: 'INFORMÁTICA I',
+                detalle: 'EXPRESIONES REGULARES AASDASDASD',
+                solucion: true,
+                autor: 'UV',
+                likes: 555,
+                extension: 'ppt'
+              ),
+              ModeloArchivo.mostrar(
                 nombre: 'INGENIERIA DE LOS MATERIALES TAREA 3',
                 year: '2006',
                 asignatura: 'INGENIERIA DE LOS MATERIALES',
-                like: 50,
+                likes: 555,
                 extension: 'ppt'
               ), 
-              DatosArchivos(
-                nombre: 'INGENIERIA DE LOS MATERIALES TAREA 3',
-                year: '2006',
-                asignatura: 'INGENIERIA DE LOS MATERIALES',
-                like: 50,
-                extension: 'ppt'
-              ), 
-              DatosArchivos(
-                nombre: 'INGENIERIA DE LOS MATERIALES TAREA 3',
-                year: '2006',
-                asignatura: 'INGENIERIA DE LOS MATERIALES',
-                like: 50,
-                extension: 'ppt'
-              ), 
-              DatosArchivos(
-                nombre: 'INGENIERIA DE LOS MATERIALES TAREA 3',
-                year: '2006',
-                asignatura: 'INGENIERIA DE LOS MATERIALES',
-                like: 50,
-                extension: 'ppt'
-              ), 
-              DatosArchivos(
-                nombre: 'INGENIERIA DE LOS MATERIALES TAREA 3',
-                year: '2006',
-                asignatura: 'INGENIERIA DE LOS MATERIALES',
-                like: 50,
-                extension: 'ppt'
-              ), 
-              DatosArchivos(
-                nombre: 'INGENIERIA DE LOS MATERIALES TAREA 3',
-                year: '2006',
-                asignatura: 'INGENIERIA DE LOS MATERIALES',
-                like: 50,
-                extension: 'ppt'
-              ), 
-              DatosArchivos(
+              ModeloArchivo.mostrar(
                 nombre: 'Prueba 2 de ecuaciones diferenciales 2021',
                 year: '2021',
                 asignatura: 'ECUACIONES DIFERENCIALES',
                 solucion: false,
                 autor: 'UV',
-                like: 2,
+                likes: 0,
                 extension: 'pdf'
-              ), 
+              ) 
             ]
           ),
           Seccion(titulo: 'g', archivos: []),
@@ -160,48 +168,64 @@ class Comunidades extends StatelessWidget{
           Seccion(
             titulo: 'matematicas',
             archivos: [
-              DatosArchivos(
+              ModeloArchivo.mostrar(
                 nombre: 'Guía 2: solucion de ecuaciones de diferenciales homogéneas de orden mayor por el método de variación de parámetros. 2018',
                 year: '2018',
                 asignatura: 'ECUACIONES DIFERENCIALES',
-                descripcion: 'solucion de ecuaciones de diferenciales homogéneas de orden mayor por el método de variación de parámetros. ',
+                detalle: 'solucion de ecuaciones de diferenciales homogéneas de orden mayor por el método de variación de parámetros. ',
                 solucion: true,
                 autor: 'UV',
-                like: 0,
+                likes: 555,
                 extension: 'pdf'
               ),
-              DatosArchivos(
+              ModeloArchivo.mostrar(
                 nombre: 'Prueba 3, 2020',
                 year: '2020',
                 asignatura: 'TALLER DE INTEGRACIÓN A LA INGENIERÍA INDUSTRIAL III',
-                descripcion: null,
+                detalle: null,
                 solucion: true,
                 autor: 'UV',
-                like: 1,
+                likes: 555,
                 extension: 'pdf'
               ),
-              DatosArchivos(
+              ModeloArchivo.mostrar(
                 nombre: 'taller 1, informatica I',
                 asignatura: 'INFORMÁTICA I',
                 solucion: false,
                 autor: 'UV',
-                like: 1000,
+                likes: 0,
                 extension: 'docx'
               ), 
-              DatosArchivos(
+              ModeloArchivo.mostrar(
                 nombre: 'Prueba 2 ALGREBA 2021 SEDE SANTIAGO',
                 asignatura: 'ÁLGEBRA',
-                like: 20,
+                likes: 555,
                 extension: 'docx'
               ),
-              DatosArchivos(
+              ModeloArchivo.mostrar(
                 nombre: '545454544545',
                 asignatura: 'INFORMÁTICA I',
-                descripcion: 'EXPRESIONES REGULARES AASDASDASD',
+                detalle: 'EXPRESIONES REGULARES AASDASDASD',
                 solucion: true,
                 autor: 'UV',
-                like: 6,
+                likes: 555,
                 extension: 'ppt'
+              ),
+              ModeloArchivo.mostrar(
+                nombre: 'INGENIERIA DE LOS MATERIALES TAREA 3',
+                year: '2006',
+                asignatura: 'INGENIERIA DE LOS MATERIALES',
+                likes: 555,
+                extension: 'ppt'
+              ), 
+              ModeloArchivo.mostrar(
+                nombre: 'Prueba 2 de ecuaciones diferenciales 2021',
+                year: '2021',
+                asignatura: 'ECUACIONES DIFERENCIALES',
+                solucion: false,
+                autor: 'UV',
+                likes: 555,
+                extension: 'pdf'
               )
             ]
           )
@@ -294,11 +318,11 @@ class UiComunidad extends StatelessWidget{
             context, 
             MaterialPageRoute(
               builder: (context) => ComunidadPage(
-                titulo      : titulo,
-                descripcion : descripcion,
-                color       : color,
-                cantidad    : secciones.length,
-                secciones   : secciones,
+                tituloComunidad : titulo,
+                descripcion     : descripcion,
+                color           : color,
+                cantidad        : secciones.length,
+                secciones       : secciones,
               )
             )
           )

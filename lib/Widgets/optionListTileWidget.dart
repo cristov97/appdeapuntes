@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class OptionListTile extends StatelessWidget{
+  final Widget leading;
   final String title;
   final String subtitle;
   final List<String> opciones;
@@ -9,6 +10,7 @@ class OptionListTile extends StatelessWidget{
   final Function(dynamic, String) changes;
 
   OptionListTile({
+    this.leading,
     this.title,
     this.subtitle,
     this.opciones,
@@ -20,6 +22,7 @@ class OptionListTile extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      leading: leading,
       title: Text(title),
       subtitle: Text(subtitle),
       onTap: (){
@@ -35,7 +38,7 @@ class OptionListTile extends StatelessWidget{
                 group               
               )
             )  
-          ),
+          )
         );
       }
     );

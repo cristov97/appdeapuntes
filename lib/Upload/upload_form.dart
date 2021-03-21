@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
+import 'package:appuntes/Otros/Modelo_archivos.dart';
 import 'package:appuntes/Otros/validaciones.dart';
 import 'selecionar_archivos.dart';
 
 class UploadForm extends StatefulWidget{
   final BuildContext context;
-  final ModelUpload datos;
+  final ModeloArchivo datos;
   final bool editarVarios;
 
   UploadForm({
@@ -55,24 +56,24 @@ class _UploadFormState extends State<UploadForm> {
   }
 
   @override
-    void dispose() {
-      super.dispose();
-      
-      if(widget.editarVarios == false){
-        nombre.dispose();
-        nombreFocus.dispose();
-      }
-
-      asignatura.dispose();
-      year.dispose();
-      autor.dispose();
-      detalles.dispose();
-
-      asignaturaFocus.dispose();
-      yearFocus.dispose();
-      autorFocus.dispose();
-      detallesFocus.dispose();
+  void dispose() {
+    if (widget.editarVarios == false){
+      nombre.dispose();
+      nombreFocus.dispose();
     }
+
+    asignatura.dispose();
+    year.dispose();
+    autor.dispose();
+    detalles.dispose();
+
+    asignaturaFocus.dispose();
+    yearFocus.dispose();
+    autorFocus.dispose();
+    detallesFocus.dispose();
+    
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +93,6 @@ class _UploadFormState extends State<UploadForm> {
         nombre.text = widget.datos.archivo.name.replaceAll(
           '.${widget.datos.archivo.extension}', ''
         );
-        widget.datos.nombre = nombre.text;
       }
     );
 

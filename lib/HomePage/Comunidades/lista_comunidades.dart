@@ -1,50 +1,9 @@
-import 'package:appuntes/Otros/Modelo_archivos.dart';
 import 'package:flutter/material.dart';
 
+import 'package:appuntes/Modelos/Modelo_archivos.dart';
+import 'package:appuntes/Modelos/Modelo_comunidades.dart';
 import 'comunidad_page.dart';
 import 'tarjeta_comunidad.dart';
-
-class MisDatos{
-  String nick;
-  List<Comunidad> comunidades;
-  MisDatos(this.comunidades);
-}
-
-class Usuario{
-  String nick;
-  String correo;
-  Image avatar;
-  Usuario(this.nick);
-}
-
-class Seccion{
-  String titulo;
-  List<ModeloArchivo> archivos;
-  Seccion({
-    this.titulo,
-    this.archivos
-  });
-}
-
-class Comunidad{
-  String nombre;
-  String descripcion;
-  bool publico;
-  Color color;
-  Image imagen;
-  List<Usuario> usuarios;
-  List<Seccion> secciones;
-
-  Comunidad({
-    this.nombre, 
-    this.descripcion,
-    this.publico,
-    this.color,
-    this.imagen,
-    this.usuarios,
-    this.secciones
-  });
-}
 
 class Comunidades extends StatelessWidget{
   @override

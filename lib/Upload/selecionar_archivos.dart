@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:appuntes/Otros/Modelo_archivos.dart';
+import 'package:appuntes/Modelos/Modelo_archivos.dart';
 import 'package:file_picker/file_picker.dart';
 
 class Extensiones{

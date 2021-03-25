@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'package:appuntes/Otros/Modelo_archivos.dart';
+import 'package:appuntes/Modelos/Modelo_archivos.dart';
 import 'package:appuntes/HomePage/home_page.dart';
 import 'ui_archivos.dart';
 

@@ -7,7 +7,8 @@ class OptionListTile extends StatelessWidget{
   final List<String> opciones;
   final List<dynamic> keyOpciones;
   final dynamic group;
-  final Function(dynamic, String) changes;
+  final Function(dynamic, String) settingChanged;
+  final Function (dynamic) onChanged;
 
   OptionListTile({
     this.leading,
@@ -16,7 +17,8 @@ class OptionListTile extends StatelessWidget{
     this.opciones,
     this.keyOpciones,
     this.group, 
-    this.changes
+    this.settingChanged,
+    this.onChanged
   });
 
   @override
@@ -49,10 +51,10 @@ class OptionListTile extends StatelessWidget{
       title: Text(text),
       value: value,
       groupValue: group,
-      onChanged: (dynamic selec) {
-        changes(selec, text);
+      onChanged: settingChanged != null? (dynamic selec) {
+        settingChanged(selec, text);
         Navigator.pop(context);
-      }
+      } : onChanged
     );
   }
 }

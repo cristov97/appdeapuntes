@@ -78,3 +78,4 @@ class TarjetaComunidad extends StatelessWidget {
     );
   }
 }
+

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:appuntes/ListaDeArchivos/lista_archivos.dart';
 import 'Comunidades/lista_comunidades.dart';
+import 'Comunidades/personalizar_comunidad.dart';
 import 'search.dart';
-import 'recientes.dart';
 
 class MyHomePage extends StatefulWidget{
   @override
@@ -30,8 +30,7 @@ class _MyHomePageState extends State<MyHomePage>{
 
   final botones = [
     Archivos(),
-    Comunidades(),
-    Recientes()
+    Comunidades()
   ];
 
   final TextStyle titleStyle = TextStyle(
@@ -127,11 +126,6 @@ class _MyHomePageState extends State<MyHomePage>{
             BottomNavigationBarItem(
               icon: Icon(Icons.group), 
               label: 'Comunidades',
-            ),
-
-            BottomNavigationBarItem(
-              icon: Icon(Icons.check_box),
-              label: 'Recientes',
             )
 
           ],
@@ -157,7 +151,7 @@ class DialogPlusButton{
 
   Widget menu(BuildContext context){
     return Container(
-      height: 60,
+      height: 120,
       child: Column(
         children: [
           ListTile(
@@ -173,6 +167,26 @@ class DialogPlusButton{
               )
             ),
             onTap: () => Navigator.pushNamed(context, 'upload')
+          ),
+
+          ListTile(
+            leading: Icon(
+              Icons.group,
+              color: Colors.blue,
+              size: 25
+            ),
+            title: Text(
+              'Crear comunidad',
+              style: TextStyle(
+                fontSize: 16
+              )
+            ),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PersonalizarComunidad(nuevaComunidad: true)
+              )
+            )
           )
         ]
       ),

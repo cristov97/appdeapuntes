@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import 'package:appuntes/Otros/Modelo_archivos.dart';
+import 'package:appuntes/Modelos/Modelo_archivos.dart';
 import 'package:appuntes/Widgets/textInformationWidget.dart';
 import 'package:appuntes/Upload/selecionar_archivos.dart';
 import 'upload_form.dart';

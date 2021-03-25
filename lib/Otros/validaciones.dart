@@ -1,6 +1,5 @@
-import 'package:appuntes/HomePage/Comunidades/lista_comunidades.dart';
-
-import 'Modelo_archivos.dart';
+import 'package:appuntes/Modelos/Modelo_archivos.dart';
+import 'package:appuntes/Modelos/Modelo_comunidades.dart';
 import 'asignaturas.dart';
 
 class Validar{

@@ -11,6 +11,7 @@ class PersonalizarComunidad extends StatefulWidget {
   final String descripcion;
   final Color color;
   final bool publico;
+  final bool nuevaComunidad;
   final String imagen;
 
   PersonalizarComunidad({
@@ -18,7 +19,8 @@ class PersonalizarComunidad extends StatefulWidget {
     this.descripcion,
     this.color,
     this.imagen,
-    this.publico
+    this.publico,
+    this.nuevaComunidad
   });
 
   @override
@@ -31,10 +33,12 @@ class _PersonalizarComunidadState extends State<PersonalizarComunidad> {
   TextEditingController nombre; 
   FocusNode descripcionFocus;
   FocusNode nombreFocus;
+  bool publico = true; //solo de prueba
+  Color groupColor;
 
   Map<Color, String> coloresDisponibles = {
     Colors.blue[700]    : 'Azul',
-    Colors.yellow[800]  : 'Amarillo',
+    Colors.yellow       : 'Amarillo',
     Colors.red          : 'Rojo',
     Colors.green        : 'Verde',
     Colors.pink         : 'Rosado',
@@ -50,6 +54,8 @@ class _PersonalizarComunidadState extends State<PersonalizarComunidad> {
     nombre           = TextEditingController(text: widget.tituloComunidad);
     descripcionFocus = FocusNode();
     nombreFocus      = FocusNode();
+
+    groupColor = widget.color?? Colors.blue[700];
   }
 
   @override
@@ -66,39 +72,28 @@ class _PersonalizarComunidadState extends State<PersonalizarComunidad> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: widget.color == null? Theme.of(context).primaryColor : widget.color,
-        title: Text('Personalizar comunidad'),
-        centerTitle: true
+        backgroundColor: widget.color?? Theme.of(context).primaryColor,
+        title: Text(widget.nuevaComunidad == true? 'Crear comunidad' : 'Personalizar comunidad'),
+        centerTitle: widget.nuevaComunidad == true? false : true,
+        actions: widget.nuevaComunidad == true? [
+          TextButton(
+            child: Text('Listo', style: TextStyle(color: Colors.white)),
+            onPressed: (){},
+          )
+        ] : null
       ),
 
       body: ListView(
-        padding: EdgeInsets.only(top: 15),
         children: [
+          
+          SeleccionarImagen(networkImage: widget.imagen),
 
-          ListTile(
-            leading: Container(
-              width: 70, height: 100,
-              decoration: BoxDecoration(
-                color: Colors.grey,
-                borderRadius: BorderRadius.circular(15),
-                image: widget.imagen == null? null: DecorationImage(
-                  image: NetworkImage(widget.imagen),
-                  fit: BoxFit.fill
-                )
-              ),
-              child: Icon(Icons.photo, color: Colors.white)
-            ),
-            title: Text('Logo/imagen de la comunidad'),
-            onTap: () => showDialog(
-              context: context,
-              builder: (context) => SeleccionarImagen(networkImage: widget.imagen)
-            )
-          ),
+          Divider(height: 5, thickness: 10),
 
           ListTile(
             leading: Icon(Icons.edit),
             title: Text('Nombre de la comunidad'),
-            subtitle: Text(widget.tituloComunidad),
+            subtitle: Text(widget.tituloComunidad?? 'Crea un nombre'),
             onTap: () => showDialog(
               context: context,
               builder: (context) => SimpleDialog(
@@ -147,27 +142,31 @@ class _PersonalizarComunidadState extends State<PersonalizarComunidad> {
             )
           ),
 
-          OptionListTile(
-            leading: Icon(widget.publico == true? Icons.lock_open : Icons.lock),
-            title: 'Acceso',
-            subtitle: widget.publico == true? 'Público' : 'Privado',
-            opciones: ['Público', 'Privado'],
-            keyOpciones: [true, false],
-            group: widget.publico 
+          ListTile(
+            leading: Icon(publico == true? Icons.lock_open : Icons.lock),
+            title: Text('Acceso'),
+            subtitle: Text(publico == true? 'Público' : 'Privado'),
+            trailing: Switch.adaptive(
+              value: publico, 
+              onChanged: (value) => setState(() => publico = value)
+            )
           ),
 
           OptionListTile(
             leading: Container(
               width: 30,
               height: 30,
-              color: widget.color
+              decoration: BoxDecoration(
+                color: groupColor,
+                borderRadius: BorderRadius.circular(15)
+              )
             ),
             title: 'Color representativo',
-            subtitle: coloresDisponibles[widget.color],
+            subtitle: coloresDisponibles[groupColor],
             opciones: ['Azul', 'Amarillo', 'Rojo', 'Verde', 'Rosado', 'Púrpura', 'Indigo', 'Naranja'],
             keyOpciones: [
               Colors.blue[700],
-              Colors.yellow[800],
+              Colors.yellow,
               Colors.red,
               Colors.green,
               Colors.pink,
@@ -175,11 +174,17 @@ class _PersonalizarComunidadState extends State<PersonalizarComunidad> {
               Colors.indigoAccent,
               Colors.orange
             ],
-            group: widget.color
+            group: groupColor,
+            onChanged: (color) {
+              setState(() => groupColor = color);
+              Navigator.pop(context);
+            }
           ),
 
+          Divider(height: 5, thickness: 10),
+
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15),
+            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
             child: TextField(
               controller: descripcion,
               focusNode: descripcionFocus,
@@ -217,7 +222,7 @@ class SeleccionarImagen extends StatefulWidget{
 class _SeleccionarImagenState extends State<SeleccionarImagen> {
 
   File nuevaImagen;
-  bool fondo = false;//revisar
+  bool enPortada = false;//revisar
 
   ImageProvider get imagenWidget{
 
@@ -230,42 +235,56 @@ class _SeleccionarImagenState extends State<SeleccionarImagen> {
 
   @override
   Widget build(BuildContext context) {
-    return SimpleDialog(
-      contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+    return Column(
       children: [
+        ListTile(
+          leading: Icon(Icons.image),
+          title: Text('Imagen/logo')
+        ),
+
         Container(
-          width: 130, height: 200,
+          width: (MediaQuery.of(context).size.width - 70),
+          height: 200,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             image: DecorationImage(
               image: imagenWidget,
-              fit: BoxFit.fill
+              fit: BoxFit.cover
             )
           )
         ),
 
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Usar como fondo'),
-            Checkbox(
-              value: fondo,
-              activeColor: Colors.blue,
-              onChanged: (value) => setState(() => fondo = value)
+            TextButton(
+              child: Text('Seleccionar '),
+              onPressed: () => filePicker.seleccionImagen.then(
+                (value) => setState(() => nuevaImagen = File(value.files.single.path))
+              )
             ),
+
+            nuevaImagen != null? TextButton(
+              child: Text('Descartar'),
+              onPressed: () => setState(() => nuevaImagen = null)
+            ) : SizedBox()
+
           ]
         ),
 
-        TextButton(
-          child: Text('Seleccionar imagen'),
-          onPressed: () => filePicker.seleccionImagen.then(
-            (value) => setState(() => nuevaImagen = File(value.files.single.path))
-          )
-        ),
-
-        TextButton(
-          child: Text('Cancelar'),
-          onPressed: () => Navigator.pop(context)
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text('Usar en la portada'),
+            Checkbox(
+              value: enPortada,
+              activeColor: Colors.blue,
+              onChanged: (value) => setState(() => enPortada = value)
+            ),
+            SizedBox(width: 25)
+          ]
         )
+       
       ]
     );
   }

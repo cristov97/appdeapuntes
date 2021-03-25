@@ -1,7 +1,7 @@
 import 'package:appuntes/Otros/validaciones.dart';
 import 'package:flutter/material.dart';
 
-import 'package:appuntes/Otros/Modelo_archivos.dart';
+import 'package:appuntes/Modelos/Modelo_archivos.dart';
 import 'package:appuntes/Upload/ui_multiArchivo.dart';
 import 'selecionar_archivos.dart';
 import 'upload_form.dart';

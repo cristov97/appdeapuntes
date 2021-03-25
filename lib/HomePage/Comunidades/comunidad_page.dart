@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+import 'package:appuntes/Modelos/Modelo_comunidades.dart';
 import 'package:appuntes/Otros/validaciones.dart';
-import 'package:appuntes/Otros/Modelo_archivos.dart';
+import 'package:appuntes/Modelos/Modelo_archivos.dart';
 import 'package:appuntes/Upload/upload_page.dart';
 import 'package:appuntes/ListaDeArchivos/ui_archivos.dart';
-import 'lista_comunidades.dart';
+
 import 'personalizar_comunidad.dart';
 
 class ComunidadPage extends StatelessWidget{
@@ -35,12 +36,12 @@ class ComunidadPage extends StatelessWidget{
 
           SliverAppBar(
             backgroundColor: color,
-            actions: [
+            actions: secciones.length > 30? [
               IconButton(
                 icon: Icon(Icons.search),
-                onPressed: (){}
+                onPressed: () {}
               )
-            ]
+            ] : null
           ),
 
           SliverPersistentHeader(
@@ -84,7 +85,7 @@ class ComunidadPage extends StatelessWidget{
                               secciones
                             )
                           )
-                          .then((seccion) => secciones.add(seccion))
+                          .then((seccion) => seccion != null? (secciones.add(seccion)) : null)
                         ),
 
                         IconButton(
@@ -109,7 +110,7 @@ class ComunidadPage extends StatelessWidget{
               )
             )
           ),
-
+         
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, i) => Column(
@@ -217,6 +218,21 @@ class OpcionesComunidad extends StatelessWidget{
           ListTile(
             leading: Icon(Icons.person_add, color: Colors.black45),
             title: Text('Enviar invitación'),
+            onTap: () {
+              Navigator.pop(context);
+              showDialog<bool>(
+                context: context,
+                builder: (context) => Invitacion()
+              )
+              .then((value){ 
+                if(value == true) ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor: Colors.red[900],
+                    content: Text('La invitación fue enviada.')
+                  )
+                );
+              });
+            }
           ),
 
           ListTile(
@@ -360,6 +376,7 @@ class _CrearSeccionState extends State<CrearSeccion> {
 }
 
 class UiSeccion extends StatelessWidget {
+
   final String tituloComunidad;
   final String tituloSeccion;
   final List<ModeloArchivo> archivos;
@@ -410,4 +427,79 @@ class UiSeccion extends StatelessWidget {
       )   
     );
   }
+}
+
+class Invitacion extends StatefulWidget{
+  final String comunidad;
+
+  Invitacion({
+    this.comunidad
+  });
+
+  @override
+  State<StatefulWidget> createState() => InvitacionState();
+}
+
+class InvitacionState extends State<Invitacion>{
+
+  TextEditingController controller;
+  FocusNode focus;
+
+  @override
+  void initState() { 
+    super.initState();
+
+    controller = TextEditingController();
+    focus      = FocusNode();
+  }
+
+  @override
+  void dispose() {
+
+    controller.dispose();
+    focus.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SimpleDialog(
+      titlePadding: EdgeInsets.all(15),
+      contentPadding: EdgeInsets.symmetric(horizontal: 15),
+      title: Text(
+        'Invitar',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        )
+      ),
+      children: [
+        TextField(
+          controller: controller,
+          focusNode: focus,
+          minLines: 1, maxLines: 2,
+          decoration: InputDecoration(
+            icon: Icon(Icons.send),
+            hintText: 'Ingresa nick o correo',
+          )
+        ),
+
+        SizedBox(height: 5),
+
+        TextButton(
+          child: Text(
+            'Enviar', 
+            textAlign: TextAlign.end, 
+            style: TextStyle(fontSize: 16)
+          ),
+          onPressed: (){
+            //TODO
+            Navigator.pop(context, true);
+          }
+        )
+      ]
+    );
+  }
+
 }

@@ -39,7 +39,7 @@ class _AjustesState extends State<Ajustes>{
             opciones: iden.options,
             keyOpciones: Identificador.values,
             group: iden.groupValue,
-            changes: (dynamic val, String text){
+            settingChanged: (dynamic val, String text){
               setState(() { 
                 OpIdentificador.option = val;
                 OpIdentificador.textOption = text;

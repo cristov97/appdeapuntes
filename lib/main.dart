@@ -16,19 +16,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return MaterialApp(
-      title: 'Appuntes',
+      title: 'App',
       theme: ThemeData(
         primaryColor: Colors.blue[800],
       ),
       debugShowCheckedModeBanner: false,
-      initialRoute: 'login',
+      initialRoute: 'home',
       routes: {
         'login'   : (context) => Login(),
         'home'    : (context) => MyHomePage(),
         'perfil'  : (context) => Perfil(),
         'ajustes' : (context) => Ajustes(),
         'upload'  : (context) => UploadPage()
-      },
+      }
     );
   }
 }

@@ -106,11 +106,7 @@ class _UploadPageState extends State<UploadPage> {
 
       showDialog<bool>(
         context: context,
-        builder: (dialogContext) => UploadForm(
-          context: dialogContext,
-          editarVarios: true,
-          datos: multiDatos
-        )
+        builder: (dialogContext) => UploadForm(editarVarios: true, datos: multiDatos)
       )
       .then(
         (value) {

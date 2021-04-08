@@ -5,12 +5,10 @@ import 'package:appuntes/Otros/validaciones.dart';
 import 'selecionar_archivos.dart';
 
 class UploadForm extends StatefulWidget{
-  final BuildContext context;
   final ModeloArchivo datos;
   final bool editarVarios;
 
   UploadForm({
-    this.context,
     this.datos, 
     this.editarVarios = false
   });
@@ -100,7 +98,7 @@ class _UploadFormState extends State<UploadForm> {
       if(formKey.currentState.validate()) {
         formKey.currentState.save();
         filePicker.modificado = true;
-        Navigator.pop(widget.context, true);
+        Navigator.pop(context, true);
       }
     };
   
@@ -130,7 +128,7 @@ class _UploadFormState extends State<UploadForm> {
                   labelText: 'Nombre',
                   hintText: 'Crea un nombre para tu documento...',
                 ),
-                onEditingComplete: () => FocusScope.of(widget.context).requestFocus(asignaturaFocus),
+                onEditingComplete: () => FocusScope.of(context).requestFocus(asignaturaFocus),
                 onSaved: (value) => widget.datos.nombre = value,
               ) : SizedBox(),
 
@@ -146,7 +144,7 @@ class _UploadFormState extends State<UploadForm> {
                   labelText: 'Asignatura',
                   hintText: 'Ingresa asignatura/area'
                 ),
-                onEditingComplete: () => FocusScope.of(widget.context).requestFocus(autorFocus),
+                onEditingComplete: () => FocusScope.of(context).requestFocus(autorFocus),
                 onSaved: (value) => widget.datos.asignatura = value,
               ),
 
@@ -161,7 +159,7 @@ class _UploadFormState extends State<UploadForm> {
                   labelText: 'Autor/institución',
                   hintText: 'Ingresa autor/institución...'
                 ),
-                onEditingComplete: () => FocusScope.of(widget.context).requestFocus(yearFocus),
+                onEditingComplete: () => FocusScope.of(context).requestFocus(yearFocus),
                 onSaved: (value) => widget.datos.autor = value,
               ),
 
@@ -176,7 +174,7 @@ class _UploadFormState extends State<UploadForm> {
                   hintText: 'Ingresa año...'
                 ),
                 onSaved: (value) => widget.datos.year = value,
-                onEditingComplete: () => FocusScope.of(widget.context).requestFocus(detallesFocus),
+                onEditingComplete: () => FocusScope.of(context).requestFocus(detallesFocus),
               ),
               
               TextFormField(
@@ -201,16 +199,20 @@ class _UploadFormState extends State<UploadForm> {
           children: [
             Text('Contiene solucionario/pauta.'),
             Checkbox(
-              value: widget.datos.solucion,
+              value: widget.datos.solucion?? false,
               activeColor: Colors.blue,
               onChanged: (value) => setState(() => widget.datos.solucion = value)
             ),
           ]
         ),
         
-        RaisedButton(
-          color: Colors.blue,
-          textColor: Colors.white,
+        ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateColor.resolveWith((states) => Colors.blue),
+            textStyle: MaterialStateProperty.all(
+              TextStyle(color: Colors.white)
+            )
+          ),
           onPressed: guardar,
           child: Text('Guardar')
         )

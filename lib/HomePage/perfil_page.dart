@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:appuntes/Upload/selecionar_archivos.dart';
 
+import '../mis_datos.dart';
+
 class Perfil extends StatefulWidget{
   @override
   _PerfilState createState() => _PerfilState();
@@ -22,9 +24,9 @@ class _PerfilState extends State<Perfil> {
   @override
   void initState() { 
     super.initState();
-    nickname = TextEditingController();
-    correo   = TextEditingController();
-    password = TextEditingController();
+    nickname = TextEditingController(text: misDatos.nick);
+    correo   = TextEditingController(text: misDatos.correo);
+    password = TextEditingController(text: misDatos.password);
 
     nicknameFocus = FocusNode();
     correoFocus   = FocusNode();

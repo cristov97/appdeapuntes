@@ -1,3 +1,5 @@
+import 'package:appuntes/Modelos/Modelo_notificacion.dart';
+import 'package:appuntes/Widgets/compartirRecursosFormWidget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:appuntes/Modelos/Modelo_comunidades.dart';
@@ -10,22 +12,10 @@ import 'personalizar_comunidad.dart';
 
 class ComunidadPage extends StatelessWidget{
 
-  final String tituloComunidad;
-  final String descripcion;
-  final Color color;
-  final int cantidad;
-  final bool publico;
-  final String imagen;
-  final List<Seccion> secciones; 
+  final Comunidad comunidad;
 
   ComunidadPage({
-    this.tituloComunidad,
-    this.descripcion,
-    this.color,
-    this.cantidad,
-    this.publico,
-    this.imagen,
-    this.secciones
+    this.comunidad
   });
 
   @override
@@ -35,8 +25,8 @@ class ComunidadPage extends StatelessWidget{
         slivers: [
 
           SliverAppBar(
-            backgroundColor: color,
-            actions: secciones.length > 30? [
+            backgroundColor: comunidad.color,
+            actions: comunidad.secciones.length > 30? [
               IconButton(
                 icon: Icon(Icons.search),
                 onPressed: () {}
@@ -54,13 +44,13 @@ class ComunidadPage extends StatelessWidget{
                   vertical: 5,
                   horizontal: 10
                 ),
-                color: color,
+                color: comunidad.color,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
 
                     Text(
-                      tituloComunidad,
+                      comunidad.nombre,
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.white, fontSize: 23)
                     ),
@@ -71,7 +61,7 @@ class ComunidadPage extends StatelessWidget{
                         Expanded(
                           flex: 2,
                           child: Text(
-                            '${secciones.length} secciones',
+                            '${comunidad.secciones.length} secciones',
                             style: TextStyle(fontSize: 18, color: Colors.white)
                           ) 
                         ),
@@ -81,24 +71,18 @@ class ComunidadPage extends StatelessWidget{
                           onPressed: () => showDialog<Seccion>(
                             context: context,
                             builder: (context) => CrearSeccion(
-                              tituloComunidad,
-                              secciones
+                              comunidad.nombre,
+                              comunidad.secciones
                             )
                           )
-                          .then((seccion) => seccion != null? (secciones.add(seccion)) : null)
+                          .then((seccion) => seccion != null? (comunidad.secciones.add(seccion)) : null)
                         ),
 
                         IconButton(
                           icon: Icon(Icons.more_vert, color: Colors.white), 
                           onPressed: () => showModalBottomSheet(
                             context: context,
-                            builder: (context) => OpcionesComunidad(
-                              tituloComunidad : tituloComunidad,
-                              descripcion     : descripcion,
-                              color           : color,
-                              imagen          : imagen,
-                              publico         : publico
-                            )
+                            builder: (context) => OpcionesComunidad(comunidad: comunidad)
                           )
                         )
 
@@ -117,16 +101,16 @@ class ComunidadPage extends StatelessWidget{
                 children: [
 
                   ListTile(
-                    title: Text(secciones[i].titulo),
-                    subtitle: Text('Contiene ${secciones[i].archivos.length} apuntes'),
+                    title: Text(comunidad.secciones[i].titulo),
+                    subtitle: Text('Contiene ${comunidad.secciones[i].archivos.length} apuntes'),
                     onTap: () => Navigator.push(
                       context, 
                       MaterialPageRoute(
                         builder: (context) => UiSeccion(
-                          tituloComunidad : tituloComunidad,
-                          tituloSeccion   : secciones[i].titulo,
-                          color           : color,
-                          archivos        : secciones[i].archivos,
+                          tituloComunidad : comunidad.nombre,
+                          tituloSeccion   : comunidad.secciones[i].titulo,
+                          color           : comunidad.color,
+                          archivos        : comunidad.secciones[i].archivos,
                         )
                       )
                     )
@@ -136,7 +120,7 @@ class ComunidadPage extends StatelessWidget{
                 ]
               ),
 
-              childCount: secciones.length,
+              childCount: comunidad.secciones.length,
 
             )
           )
@@ -176,18 +160,10 @@ class PersistentHeader extends SliverPersistentHeaderDelegate{
 
 class OpcionesComunidad extends StatelessWidget{
 
-  final String tituloComunidad;
-  final String descripcion;
-  final Color color;
-  final bool publico;
-  final String imagen;
+  final Comunidad comunidad;
 
   OpcionesComunidad({
-    this.tituloComunidad,
-    this.descripcion,
-    this.color,
-    this.imagen,
-    this.publico
+   this.comunidad
   });
 
   @override
@@ -205,11 +181,11 @@ class OpcionesComunidad extends StatelessWidget{
               context, 
               MaterialPageRoute(
                 builder: (context) => PersonalizarComunidad(
-                  tituloComunidad : tituloComunidad,
-                  descripcion     : descripcion,
-                  color           : color,
-                  imagen          : imagen,
-                  publico         : publico
+                  tituloComunidad : comunidad.nombre,
+                  descripcion     : comunidad.descripcion,
+                  color           : comunidad.color,
+                  imagen          : comunidad.imagen,
+                  publico         : comunidad.publico
                 )
               )
             )
@@ -222,7 +198,11 @@ class OpcionesComunidad extends StatelessWidget{
               Navigator.pop(context);
               showDialog<bool>(
                 context: context,
-                builder: (context) => Invitacion()
+                builder: (context) => CompartirRecurso(
+                  tituloDialogo : 'Invitar',
+                  comunidad     : comunidad,
+                  notificacion  : Notificar.invitacion
+                )
               )
               .then((value){ 
                 if(value == true) ScaffoldMessenger.of(context).showSnackBar(
@@ -427,79 +407,4 @@ class UiSeccion extends StatelessWidget {
       )   
     );
   }
-}
-
-class Invitacion extends StatefulWidget{
-  final String comunidad;
-
-  Invitacion({
-    this.comunidad
-  });
-
-  @override
-  State<StatefulWidget> createState() => InvitacionState();
-}
-
-class InvitacionState extends State<Invitacion>{
-
-  TextEditingController controller;
-  FocusNode focus;
-
-  @override
-  void initState() { 
-    super.initState();
-
-    controller = TextEditingController();
-    focus      = FocusNode();
-  }
-
-  @override
-  void dispose() {
-
-    controller.dispose();
-    focus.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SimpleDialog(
-      titlePadding: EdgeInsets.all(15),
-      contentPadding: EdgeInsets.symmetric(horizontal: 15),
-      title: Text(
-        'Invitar',
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        )
-      ),
-      children: [
-        TextField(
-          controller: controller,
-          focusNode: focus,
-          minLines: 1, maxLines: 2,
-          decoration: InputDecoration(
-            icon: Icon(Icons.send),
-            hintText: 'Ingresa nick o correo',
-          )
-        ),
-
-        SizedBox(height: 5),
-
-        TextButton(
-          child: Text(
-            'Enviar', 
-            textAlign: TextAlign.end, 
-            style: TextStyle(fontSize: 16)
-          ),
-          onPressed: (){
-            //TODO
-            Navigator.pop(context, true);
-          }
-        )
-      ]
-    );
-  }
-
 }

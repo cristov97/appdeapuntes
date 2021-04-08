@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 
-class TarjetaComunidad extends StatelessWidget {
-  final Color color;
-  final String titulo;
-  final String descripcion;
-  final bool publico;
+import 'package:appuntes/Modelos/Modelo_notificacion.dart';
+import 'package:appuntes/Modelos/Modelo_comunidades.dart';
+import '../../mis_datos.dart';
 
-  TarjetaComunidad({
-    this.color,
-    this.titulo,
-    this.descripcion,
-    this.publico
-  });
+class TarjetaComunidad extends StatelessWidget {
+  final Comunidad comunidad;
+
+  TarjetaComunidad({this.comunidad});
+  
+  Notificacion notificacion;
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +22,11 @@ class TarjetaComunidad extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
-          color: color,
+          color: comunidad.color,
           boxShadow: [BoxShadow(color: Colors.black38, offset: Offset(0, 1))]
         ),
         child: Text(
-          titulo,
+          comunidad.nombre,
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.white, 
@@ -44,35 +42,42 @@ class TarjetaComunidad extends StatelessWidget {
         Text(
           'Descripción de la comunidad:',
           style: TextStyle(
-            color: color,
+            color: comunidad.color,
             fontSize: 16
           )
         ),
 
         SizedBox(height: 8),
 
-        Text(descripcion),
+        Text(comunidad.descripcion),
 
         SizedBox(height: 15),
-
+         
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 30),
-          child: FlatButton(
-            color: color.withAlpha(220),
-            textColor: Colors.white,
+          child: ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateColor.resolveWith((states) => comunidad.color.withAlpha(220)),
+              textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(publico == true? 'Unirme' : 'Enviar solicitud'),
+                Text(comunidad.publico == true? 'Unirme' : 'Enviar solicitud'),
                 SizedBox(width: 5),
-                Icon(publico == true? Icons.person : Icons.send)
+                Icon(comunidad.publico == true? Icons.person : Icons.send)
               ],
             ),
 
             onPressed: () {
-              
-            },
-          ),
+              notificacion = Notificacion.comunidad(
+                tipo  : Notificar.solicitud,
+                emisor: misDatos,
+                
+                comunidad: comunidad
+              );
+            }
+          )
         )
       ]
     );

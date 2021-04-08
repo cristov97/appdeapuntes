@@ -135,22 +135,26 @@ class _LoginState extends State<Login> {
 
         SizedBox(height: 15),
 
-        RaisedButton(
-          color: Colors.blue,
-          textColor: Colors.white,
-          padding: buttonPadding,
-          shape: buttonShape,
+        ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateColor.resolveWith((states) => Colors.blue),
+            padding: MaterialStateProperty.all(buttonPadding),
+            textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)),
+            shape: MaterialStateProperty.all(buttonShape)
+          ),
           child: Text('Registrarme', style: buttonStyle),
-          onPressed: () => setState(() => opcion = LoginMenu.registro)
+          onPressed: () => setState(() => opcion = LoginMenu.registro),
         ),
 
         SizedBox(height: 10),
 
-        RaisedButton(
-          color: Colors.green,
-          textColor: Colors.white,
-          padding: buttonPadding,
-          shape: buttonShape,
+        ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateColor.resolveWith((states) => Colors.green),
+            padding: MaterialStateProperty.all(buttonPadding),
+            textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)),
+            shape: MaterialStateProperty.all(buttonShape)
+          ),
           child: Text('Iniciar sesión', style: buttonStyle),
           onPressed: () => setState(() => opcion = LoginMenu.sesion)
         )
@@ -225,11 +229,13 @@ class _LoginState extends State<Login> {
 
           Spacer(),
 
-          RaisedButton(
-            color: Colors.blue,
-            textColor: Colors.white,
+          ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateColor.resolveWith((states) => Colors.blue),
+              textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)),
+            ),
             child: Text(opcion == LoginMenu.registro? 'Registrar':'Iniciar'),
-            onPressed: (){},
+            onPressed: () {}
           ),
 
           opcion == LoginMenu.registro? SizedBox() : TextButton(

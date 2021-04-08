@@ -29,6 +29,7 @@ class TarjetaArchivo extends StatelessWidget {
   final titleDialog = Container(
     padding: EdgeInsets.all(10),
     decoration: BoxDecoration(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
       gradient: LinearGradient(
         begin: Alignment.centerLeft,
         colors: [
@@ -61,39 +62,32 @@ class TarjetaArchivo extends StatelessWidget {
               ]
             )
           )
-        ],
-      ),
+        ]
+      )
     )
   );
   
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SimpleDialog(
-          title: titleDialog,  
-          titlePadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 12
-          ),
-          backgroundColor: Colors.white, 
-          shape: shapeDialog,
-          children:[ 
-            TextInformation('Nombre: ', nombre),
-            sizedBoxText,
-            TextInformation('Asignatura: ', asignatura),
-            sizedBoxText,
-            TextInformation('Autor/institución: ', autor),
-            sizedBoxText,
-            TextInformation('Año: ', year),
-            sizedBoxText,
-            TextInformation('Detalles: ', detalle),
-            sizedBoxText,
-            TextInformation('Pauta/solucionario: ', solucion == true? 'Sí':'No')                                                                  
-          ]           
-        )
-      ]
+    return SimpleDialog(
+      title: titleDialog,  
+      titlePadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+      backgroundColor: Colors.white, 
+      shape: shapeDialog,
+      children:[ 
+        TextInformation('Nombre: ', nombre),
+        sizedBoxText,
+        TextInformation('Asignatura: ', asignatura),
+        sizedBoxText,
+        TextInformation('Autor/institución: ', autor),
+        sizedBoxText,
+        TextInformation('Año: ', year),
+        sizedBoxText,
+        TextInformation('Detalles: ', detalle),
+        sizedBoxText,
+        TextInformation('Pauta/solucionario: ', solucion == true? 'Sí':'No')                                                                  
+      ]           
     );
   }
 }

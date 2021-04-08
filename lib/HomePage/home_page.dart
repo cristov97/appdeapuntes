@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:appuntes/ListaDeArchivos/lista_archivos.dart';
+import '../mis_datos.dart';
 import 'Comunidades/lista_comunidades.dart';
 import 'Comunidades/personalizar_comunidad.dart';
+import 'mis_apuntes_page.dart';
+import 'mis_comunidades_page.dart';
+import 'notificaciones_page.dart';
 import 'search.dart';
 
 class MyHomePage extends StatefulWidget{
@@ -24,8 +28,8 @@ class _MyHomePageState extends State<MyHomePage>{
 
   @override
   void dispose() {
-    super.dispose();
     _mainPag.dispose();
+    super.dispose();
   }
 
   final botones = [
@@ -71,8 +75,8 @@ class _MyHomePageState extends State<MyHomePage>{
               currentAccountPicture: CircleAvatar(
                 child: Icon(Icons.account_circle)
               ),
-              accountName: Text('nick'),
-              accountEmail: Text('correo@correo.com'),
+              accountName: Text(misDatos.nick),
+              accountEmail: Text(misDatos.correo),
             ),
 
             ListTile(
@@ -84,15 +88,19 @@ class _MyHomePageState extends State<MyHomePage>{
             ListTile(
               leading: Icon(Icons.library_books, color: Theme.of(context).primaryColor),
               title  :  Text('Mis apuntes'),
-              onTap  : (){
-              }
+              onTap  : () => Navigator.push(context, MaterialPageRoute(builder: (context) => MisApuntes()))
             ),
 
             ListTile(
               leading: Icon(Icons.group, color: Theme.of(context).primaryColor),
               title  :  Text('Mis comunidades'),
-              onTap  : (){
-              }
+              onTap  : () => Navigator.push(context, MaterialPageRoute(builder: (context) => MisComunidades()))
+            ),
+
+            ListTile(
+              leading: Icon(Icons.notifications, color: Theme.of(context).primaryColor),
+              title  :  Text('Notificaciones'),
+              onTap  : () => Navigator.push(context, MaterialPageRoute(builder: (context) => NotificacionesPage()))
             ),
 
             ListTile(

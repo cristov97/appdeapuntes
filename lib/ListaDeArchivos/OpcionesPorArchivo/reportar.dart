@@ -76,14 +76,15 @@ class _ReportState extends State<Report>{
             ),
             textFieldReport(groupOption),
 
-            RaisedButton(
-              color: Colors.blue,
-              textColor: Colors.white,
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateColor.resolveWith((states) => Colors.blue),
+                textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)),
+              ),
               child: Text('Enviar'),
-              onPressed: (){
-
-              }
+              onPressed: () {}
             )
+
           ]
         )
       ] 

@@ -12,7 +12,6 @@ class Ajustes extends StatefulWidget{
 }
 
 class _AjustesState extends State<Ajustes>{
-
   OpIdentificador iden = OpIdentificador();
   
   @override

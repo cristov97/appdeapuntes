@@ -23,33 +23,19 @@ class OpIdentificador implements Options{
   }
 
   get groupValue{
-    if(option == null){
-      return porDefecto['option']; 
-    }
-    else{
-      return option;
-    }
+    if (option == null) return porDefecto['option']; 
+    else return option;
   }
 
   String get subtitle{
-    if(option == null){
-      return porDefecto['textOption']; 
-    }
-    else{
-      return textOption;
-    }
+    if (option == null) return porDefecto['textOption']; 
+    else return textOption;
   }
 
   double get fontSize{
-    if(option == Identificador.inicial){
-      return 20;
-    }
-    else if(option == Identificador.archExtension){
-      return 15;
-    }
-    else{
-      return null;
-    }
+    if(option == Identificador.inicial) return 20;
+    if(option == Identificador.archExtension) return 15;
+    return null;
   } 
 
 }

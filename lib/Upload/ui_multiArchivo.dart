@@ -86,10 +86,7 @@ class UiUploadArchivos extends StatelessWidget{
       showDialog<bool>(
         barrierDismissible: false,
         context: context,
-        builder: (dialogContext) => UploadForm(
-          context : dialogContext,
-          datos   : datos
-        )
+        builder: (dialogContext) => UploadForm(datos: datos)
       )
       .then((value) => actualizarDatos(value)); 
     };

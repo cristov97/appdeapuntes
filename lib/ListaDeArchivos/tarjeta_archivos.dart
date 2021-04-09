@@ -39,6 +39,7 @@ class TarjetaArchivo extends StatelessWidget {
         ]
       )
     ),
+    
     child: Center(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

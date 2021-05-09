@@ -51,34 +51,8 @@ class TarjetaComunidad extends StatelessWidget {
 
         Text(comunidad.descripcion),
 
-        SizedBox(height: 15),
-         
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 30),
-          child: ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateColor.resolveWith((states) => comunidad.color.withAlpha(220)),
-              textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(comunidad.publico == true? 'Unirme' : 'Enviar solicitud'),
-                SizedBox(width: 5),
-                Icon(comunidad.publico == true? Icons.person : Icons.send)
-              ],
-            ),
-
-            onPressed: () {
-              notificacion = Notificacion.comunidad(
-                tipo  : Notificar.solicitud,
-                emisor: misDatos,
-                
-                comunidad: comunidad
-              );
-            }
-          )
-        )
+        SizedBox(height: 15)
+        
       ]
     );
   }

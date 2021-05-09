@@ -89,18 +89,8 @@ class _ArchivosState extends State<Archivos>{
       child: ListView.builder(
         padding: EdgeInsets.only(top: 10, bottom: _spaceEnd),
         itemCount: lista.length,
-        itemBuilder: (context, i){
-          return UiArchivo(
-            nombre       : lista[i].nombre,
-            year         : lista[i].year, 
-            asignatura   : lista[i].asignatura, 
-            detalle      : lista[i].detalle, 
-            solucion     : lista[i].solucion, 
-            autor        : lista[i].autor,
-            likes        : lista[i].likes,
-            extension    : lista[i].extension
-          );
-        }
+        itemBuilder: (context, i) => UiArchivo(archivo: lista[i])
+        
       )
     );
   }

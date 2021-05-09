@@ -1,5 +1,3 @@
-import 'package:appuntes/Modelos/Modelo_notificacion.dart';
-import 'package:appuntes/Widgets/compartirRecursosFormWidget.dart';
 import 'package:flutter/material.dart';
 
 import 'package:appuntes/Modelos/Modelo_comunidades.dart';
@@ -7,7 +5,8 @@ import 'package:appuntes/Otros/validaciones.dart';
 import 'package:appuntes/Modelos/Modelo_archivos.dart';
 import 'package:appuntes/Upload/upload_page.dart';
 import 'package:appuntes/ListaDeArchivos/ui_archivos.dart';
-
+import 'package:appuntes/Modelos/Modelo_notificacion.dart';
+import 'package:appuntes/Widgets/compartirRecursosFormWidget.dart';
 import 'personalizar_comunidad.dart';
 
 class ComunidadPage extends StatelessWidget{
@@ -162,9 +161,7 @@ class OpcionesComunidad extends StatelessWidget{
 
   final Comunidad comunidad;
 
-  OpcionesComunidad({
-   this.comunidad
-  });
+  OpcionesComunidad({this.comunidad});
 
   @override
   Widget build(BuildContext context) {
@@ -395,15 +392,7 @@ class UiSeccion extends StatelessWidget {
       body: ListView.builder(
         padding: EdgeInsets.symmetric(vertical: 10),
         itemCount: archivos.length,
-        itemBuilder: (context, i) => UiArchivo(
-          nombre       : archivos[i].nombre,
-          year         : archivos[i].year,
-          asignatura   : archivos[i].asignatura,
-          autor        : archivos[i].autor,
-          solucion     : archivos[i].solucion,
-          likes        : archivos[i].likes,
-          extension    : archivos[i].extension
-        )
+        itemBuilder: (context, i) => UiArchivo(archivo: archivos[i])
       )   
     );
   }

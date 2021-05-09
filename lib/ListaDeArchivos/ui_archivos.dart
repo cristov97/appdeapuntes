@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:appuntes/Modelos/Modelo_archivos.dart';
 import 'package:flutter/material.dart';
 
 import 'OpcionesPorArchivo/reportar.dart';
@@ -7,26 +8,12 @@ import 'avatar_archivos.dart';
 import 'tarjeta_archivos.dart';
 
 class UiArchivo extends StatelessWidget{
-  @required final String nombre;
-  @required final String asignatura;
-  final String year;
-  final String detalle;
-  final bool solucion;
-  final String autor;
-  final int likes;
-  final String extension;
+  final ModeloArchivo archivo;
   final bool eliminarReporte;
   final Function onTap;
   
   UiArchivo({
-    this.nombre,
-    this.asignatura, 
-    this.year, 
-    this.detalle, 
-    this.solucion, 
-    this.autor, 
-    this.likes, 
-    this.extension,
+    this.archivo,
     this.eliminarReporte = false,
     this.onTap
   });
@@ -46,7 +33,7 @@ class UiArchivo extends StatelessWidget{
     void reportButton(){
       showDialog(
         context: context,
-        builder: (context) => Report(nombre)
+        builder: (context) => Report(archivo.nombre)
       );
     }
 
@@ -54,12 +41,12 @@ class UiArchivo extends StatelessWidget{
       children:[
         ListTile(
           onTap: onTap,
-          leading: AvatarArchivo(nombre, extension),
-          title: Text(nombre, maxLines: 2, overflow: TextOverflow.ellipsis),
+          leading: AvatarArchivo(archivo.nombre, archivo.extension),
+          title: Text(archivo.nombre, maxLines: 2, overflow: TextOverflow.ellipsis),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(asignatura),
+              Text(archivo.asignatura),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -68,7 +55,7 @@ class UiArchivo extends StatelessWidget{
                   Expanded(
                     flex: 6,
                     child: Text(
-                      likes != 0 && likes != null? 'A ${likes.toString()} personas les resultó útil.'
+                      archivo.likes != 0 && archivo.likes != null? 'A ${archivo.likes.toString()} personas les resultó útil.'
                       : 'No ha sido recomendado aún.'
                     )
                   ),
@@ -81,14 +68,7 @@ class UiArchivo extends StatelessWidget{
                       onPressed: (){
                         showDialog(
                           context: context,
-                          builder: (context) => TarjetaArchivo(
-                            nombre     : nombre,
-                            asignatura : asignatura,
-                            detalle    : detalle,
-                            year       : year,
-                            autor      : autor,
-                            solucion   : solucion
-                          )                   
+                          builder: (context) => TarjetaArchivo(archivo: archivo)                   
                         );
                       }
                     )

@@ -1,23 +1,14 @@
+import 'package:appuntes/Modelos/Modelo_archivos.dart';
 import 'package:flutter/material.dart';
 
 import 'package:appuntes/Widgets/textInformationWidget.dart';
  
 class TarjetaArchivo extends StatelessWidget {
 
-  final String nombre;
-  final String asignatura;
-  final String year;
-  final String detalle;
-  final String autor;
-  final bool solucion;
+  final ModeloArchivo archivo;
 
   TarjetaArchivo({
-    this.nombre,
-    this.asignatura,
-    this.year,
-    this.detalle,
-    this.autor, 
-    this.solucion
+    this.archivo
   });
 
   final shapeDialog = RoundedRectangleBorder(
@@ -41,7 +32,7 @@ class TarjetaArchivo extends StatelessWidget {
     ),
     
     child: Center(
-      child: Row(
+      child: Row( 
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
@@ -77,17 +68,17 @@ class TarjetaArchivo extends StatelessWidget {
       backgroundColor: Colors.white, 
       shape: shapeDialog,
       children:[ 
-        TextInformation('Nombre: ', nombre),
+        TextInformation('Nombre: ', archivo.nombre),
         sizedBoxText,
-        TextInformation('Asignatura: ', asignatura),
+        TextInformation('Asignatura: ', archivo.asignatura),
         sizedBoxText,
-        TextInformation('Autor/institución: ', autor),
+        TextInformation('Autor/institución: ', archivo.autor),
         sizedBoxText,
-        TextInformation('Año: ', year),
+        TextInformation('Año: ', archivo.year),
         sizedBoxText,
-        TextInformation('Detalles: ', detalle),
+        TextInformation('Detalles: ', archivo.detalle),
         sizedBoxText,
-        TextInformation('Pauta/solucionario: ', solucion == true? 'Sí':'No')                                                                  
+        TextInformation('Pauta/solucionario: ', archivo.solucion == true? 'Sí':'No')                                                                  
       ]           
     );
   }

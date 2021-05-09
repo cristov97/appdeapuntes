@@ -82,8 +82,7 @@ class MisApuntesState extends State<MisApuntes> with TickerProviderStateMixin {
             padding: EdgeInsets.symmetric(vertical: 10),
             itemCount: misArchivos.length,
             itemBuilder: (context, i) => UiArchivo(
-              nombre: '${misArchivos[i].nombre}',
-              asignatura: '${misArchivos[i].asignatura}',
+              archivo: misArchivos[i],
               eliminarReporte : true,
               onTap: () {
                 editable = misArchivos[i];
@@ -99,8 +98,7 @@ class MisApuntesState extends State<MisApuntes> with TickerProviderStateMixin {
             padding: EdgeInsets.symmetric(vertical: 10),
             itemCount: utiles.length,
             itemBuilder: (context, i) => UiArchivo(
-              nombre     : '${utiles[i].nombre}',
-              asignatura : '${utiles[i].asignatura}',
+              archivo: utiles[i],
               onTap      : (){
                 showModalBottomSheet(
                   context: context,

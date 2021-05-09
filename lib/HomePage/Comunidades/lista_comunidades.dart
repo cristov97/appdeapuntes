@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:appuntes/Modelos/Modelo_usuarios.dart';
 import 'package:appuntes/Modelos/Modelo_archivos.dart';
 import 'package:appuntes/Modelos/Modelo_comunidades.dart';
+import 'package:appuntes/Modelos/Modelo_notificacion.dart';
+import 'package:appuntes/Widgets/compartirRecursosFormWidget.dart';
+import '../../mis_datos.dart';
 import 'comunidad_page.dart';
 import 'tarjeta_comunidad.dart';
+
 
 class Comunidades extends StatelessWidget{
   @override
@@ -203,7 +207,22 @@ class Comunidades extends StatelessWidget{
       body: ListView.builder(
         padding: EdgeInsets.only(top: 10),
         itemCount: comunidades.length,
-        itemBuilder: (context, i) => UiComunidad(comunidad: comunidades[i])
+        itemBuilder: (context, i) => UiComunidad(
+          comunidad: comunidades[i],
+          onTap: comunidades[i].publico == false && !misDatos.comunidades.contains(comunidades[i])
+          ? () => enviarSolicitud(context, comunidades[i]) : null
+        )
+      )
+    );
+  }
+
+  void enviarSolicitud(BuildContext context, Comunidad comunidad){
+    showDialog(
+      context: context,
+      builder: (context) => CompartirRecurso(
+        comunidad: comunidad,
+        tituloDialogo: 'Solicitud de acceso',
+        notificacion: Notificar.solicitud
       )
     );
   }

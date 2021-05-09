@@ -6,7 +6,8 @@ enum Notificar{
   comentario,
   invitacion,
   recomendacion,
-  solicitud
+  solicitud,
+  solicitudAceptada
 }
 
 class Notificacion{

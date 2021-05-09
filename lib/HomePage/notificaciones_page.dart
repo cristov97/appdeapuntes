@@ -7,6 +7,8 @@ import 'package:appuntes/Modelos/Modelo_notificacion.dart';
 import 'package:appuntes/Modelos/Modelo_usuarios.dart';
 import 'package:appuntes/mis_datos.dart';
 
+import 'Comunidades/comunidad_page.dart';
+
 class NotificacionesPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _NotificacionesPageState();
@@ -74,6 +76,18 @@ class _NotificacionesPageState extends State<NotificacionesPage> {
             ),
             comentario: 'La creatividad, en sentido limitado, se refiere a las aptitudes que son características de los individuos creadores, como la fluidez, la flexibilidad, laoriginalidad y el pensamiento divergente Thurstone (1952): Es un proceso para formar ideas o hipótesis, verificarlas y comunicar los resultados, suponiendo que el producto creado sea algo nuevo'
           );
+
+          misDatos.nuevaNotificacion = Notificacion.comunidad(
+            tipo: Notificar.solicitudAceptada,
+            emisor: Usuario(nick: '545'),
+            comunidad: Comunidad(
+              nombre: 'jsjlaklaksdjd',
+              descripcion: 'a',
+              publico: true,
+              color: Colors.yellow,
+              secciones: []
+            )
+          );
           }
         )
   
@@ -85,7 +99,7 @@ class _NotificacionesPageState extends State<NotificacionesPage> {
 
     CircleAvatar avatarUsuario = CircleAvatar(
       //backgroundImage: NetworkImage(notificacion.emisor.imagen)?? null,
-      child: notificacion.emisor.imagen == null? Text(notificacion.emisor.nick.substring(0,1)) : null
+      child: Text(notificacion.emisor.nick.substring(0,1)) 
     );
 
     Widget titleText({String emisor, String mensaje, Color remarcado}){
@@ -235,6 +249,26 @@ class _NotificacionesPageState extends State<NotificacionesPage> {
                 ]
               )
             )
+          )
+        );
+      break;
+
+      case Notificar.solicitudAceptada:
+        return ListTile(
+          leading: CircleAvatar(
+            backgroundColor: notificacion.comunidad.color,
+            //backgroundImage: NetworkImage(notificacion.comunidad.imagen)?? null,
+            child: ( 
+              notificacion.comunidad.imagen == null
+              ? Text(notificacion.comunidad.nombre.substring(0,1))
+              : null
+            )
+          ),
+          title: Text('Han aceptado tu solicitud'),
+          subtitle: subtitle(
+            title: notificacion.comunidad.nombre,
+            textButton: 'Ir',
+            onPressed: () => ComunidadPage(comunidad: notificacion.comunidad)
           )
         );
       break;

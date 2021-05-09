@@ -26,21 +26,27 @@ class _CompartirRecursoState extends State<CompartirRecurso>{
   TextEditingController comentario;
   FocusNode focusNickname;
   FocusNode focusComentario;
-  Notificacion notificacion;
+  List<Notificacion> notificacion;
 
   @override
   void initState() { 
     super.initState();
-    nickname   = TextEditingController();
+
+    if(widget.notificacion != Notificar.solicitud) {
+      nickname = TextEditingController();
+      focusNickname   = FocusNode();
+    }
+
     comentario = TextEditingController();
-    focusNickname   = FocusNode(); 
     focusComentario = FocusNode();
   }
 
   @override
   void dispose() {
-    nickname.dispose();
-    focusNickname.dispose();
+    if(widget.notificacion != Notificar.solicitud) {
+      nickname.dispose();
+      focusNickname.dispose();
+    }
 
     comentario.dispose();
     focusComentario.dispose();
@@ -52,7 +58,7 @@ class _CompartirRecursoState extends State<CompartirRecurso>{
     return GestureDetector(
       onTap: () {
         focusComentario.unfocus();
-        focusNickname.unfocus();
+        if(widget.notificacion != Notificar.solicitud) focusNickname.unfocus();
       },
       child: SimpleDialog(
         titlePadding: EdgeInsets.only(top: 15),
@@ -66,62 +72,107 @@ class _CompartirRecursoState extends State<CompartirRecurso>{
           )
         ),
 
-        children: [
-          TextField(
-            controller: nickname,
-            focusNode: focusNickname,
-            minLines: 1, maxLines: 2,
-            textInputAction: TextInputAction.next,
-            decoration: InputDecoration(
-              icon: Icon(Icons.send),
-              hintText: 'Ingresa nick',
-            ),
-            onEditingComplete: () => FocusScope.of(context).requestFocus(focusComentario)
-          ),
-
-          SizedBox(height: 20),
-
-          Text('Deja un mensaje (opcional) :'),
-
-          SizedBox(height: 15),
-
-          TextField(
-            controller: comentario,
-            focusNode: focusComentario,
-            minLines: 3, maxLines: 10,
-            decoration: InputDecoration(
-              hintText: 'Comentario...',
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(15))
-            ),
-            
-          ),
-
-          SizedBox(height: 5),
-
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 50.0),
-            child: TextButton(
-              child: Text(
-                'Enviar', 
-                style: TextStyle(fontSize: 16)
-              ),
-              onPressed: (){
-
-                notificacion = Notificacion.comunidad(
-                  tipo         : widget.notificacion,
-                  emisor       : misDatos,
-                  destinatario : nickname.text,
-                  comunidad    : widget.comunidad,
-                  comentario   : comentario.text
-                );
-                
-                Navigator.pop(context, true);
-              }
-            ),
-          )
-        ]
-      ),
+        children: widget.notificacion != Notificar.solicitud? enviarRecurso() : enviarSolicitud()
+      )
     );
+  }
+
+  List<Widget> enviarRecurso(){
+    return [
+      TextField(
+        controller: nickname,
+        focusNode: focusNickname,
+        minLines: 1, maxLines: 2,
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          icon: Icon(Icons.send),
+          hintText: 'Ingresa nick',
+        ),
+        onEditingComplete: () => FocusScope.of(context).requestFocus(focusComentario)
+      ),
+
+      SizedBox(height: 20),
+
+      Text('Deja un mensaje (opcional) :'),
+
+      SizedBox(height: 15),
+
+      TextField(
+        controller: comentario,
+        focusNode: focusComentario,
+        minLines: 3, maxLines: 10,
+        decoration: InputDecoration(
+          hintText: 'Comentario...',
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(15))
+        )  
+      ),
+
+      SizedBox(height: 5),
+
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 50.0),
+        child: TextButton(
+          child: Text(
+            'Enviar', 
+            style: TextStyle(fontSize: 16)
+          ),
+          onPressed: (){
+
+            notificacion.first = Notificacion.comunidad(
+              tipo         : widget.notificacion,
+              emisor       : misDatos,
+              destinatario : nickname.text,
+              comunidad    : widget.comunidad,
+              comentario   : comentario.text
+            );
+            
+            Navigator.pop(context, true);
+          }
+        )
+      )
+    ];
+  }
+
+  List<Widget> enviarSolicitud() {
+    return [
+      TextField(
+        controller: comentario,
+        focusNode: focusComentario,
+        minLines: 3, maxLines: 10,
+        decoration: InputDecoration(
+          hintText: 'Comentario...',
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(15))
+        )  
+      ),
+
+      SizedBox(height: 5),
+
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: 50.0),
+        child: TextButton(
+          child: Text(
+            'Enviar', 
+            style: TextStyle(fontSize: 16)
+          ),
+          onPressed: (){
+
+            notificacion = List.generate(
+              widget.comunidad.administradores.length,
+              (i) => Notificacion.comunidad(
+                tipo         : widget.notificacion,
+                emisor       : misDatos,
+                destinatario : widget.comunidad.administradores[i].nick,
+                comunidad    : widget.comunidad,
+                comentario   : comentario.text
+              )
+            ); 
+            
+            
+            Navigator.pop(context, true);
+          }
+        )
+      )
+    ];
   }
 
 }
